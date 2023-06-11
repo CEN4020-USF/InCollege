@@ -16,14 +16,13 @@ class TestJob:
 
     def test_post_job(self, monkeypatch, capsys, mocker):
         # Mocking input to simulate user interaction
-        inputs = ["Test Title", "Test Desc", "Test Employer", "Test Location", "12345", "4"]
+        inputs = ["johnnytest", "Password1!", "3", "1", "Test Title", "Test Desc", "Test Employer", "Test Location", "12345", "9", "4", "4"]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
         # Mocking the get_user method to return a user with matching credentials
-        user = ["johnnytest", "Password123", "John", "Doe"]
-        with mocker.patch.object(db, "get_user", return_value=user):
-            with mocker.patch('Pages.LoginPage.username', return_value=user[0]) as test:
-                with mocker.patch.object(db, 'add_job'):
-                    self.job.post_job()
+        user = ["johnnytest", "Password1!", "John", "Doe"]
+        with mocker.patch.object(db, 'get_user', return_value=user):
+            with mocker.patch.object(db, 'add_job'):
+                self.login.sign_in()
 
         # Capturing printed output and asserting expected result
         captured = capsys.readouterr()
