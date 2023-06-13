@@ -28,7 +28,7 @@ class Login:
             self.create_account()
         elif option == 3:
             self.search()
-        elif option ==5:
+        elif option == 4:
             self.play_video()
         elif option == 5:
             Menu.MainMenu().exit()
