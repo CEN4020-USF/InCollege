@@ -195,11 +195,10 @@ class TestMenu:
         assert "Welcome blanders1!" in captured.out
 
     def test_search_for_someone_invalid_login(self, mocker, capsys, monkeypatch):
-        inputs = ["3", "1", "ben", "land", "1", "1", "notreal", "Forgaming1!", "5"]
+        inputs = ["3", "1", "ben", "land", "1", "1", "notreal", "Forgaming1!", "5", "5"]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
-        user = ["notreal", "Forgaming1!"]
-        with mocker.patch.object(db, 'get_user', return_value=user):
+        with mocker.patch.object(db, 'get_user', return_value=None):
             self.login.search()
 
         captured = capsys.readouterr()
