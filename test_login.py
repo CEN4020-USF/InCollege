@@ -142,3 +142,137 @@ class TestMenu:
 
         captured = capsys.readouterr()
         assert "Sending you to the main menu navigation" in captured.out
+
+    def test_video_playing(self, mocker, capsys, monkeypatch):
+        inputs = ["4", "5"]
+        monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+
+        with mocker.patch.object(db, "get_user"):
+            self.login.play_video()
+
+        captured = capsys.readouterr()
+        assert "* Video is now playing *" in captured.out
+
+    def test_create_account_valid_first_last(self, mocker, capsys, monkeypatch):
+        inputs = ["TestUserValid", "ValidP@ss1", "cool", "sick", "4"]
+        monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+
+        with mocker.patch.object(db, "add_user"):
+            self.login.create_account()
+
+        captured = capsys.readouterr()
+        assert "Welcome TestUserValid!" in captured.out
+
+    def test_search_for_someone_valid(self, mocker, capsys, monkeypatch):
+        inputs = ["3", "1", "ben", "land", "2", "2", "5"]
+        monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+
+        with mocker.patch.object(db, "get_user"):
+            self.login.search()
+
+        captured = capsys.readouterr()
+        assert "\nThey are part of the InCollege system\n" in captured.out
+
+    def test_search_for_someone_invalid(self, mocker, capsys, monkeypatch):
+        inputs = ["3", "1", "fake", "name", "2", "5"]
+        monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+
+        with mocker.patch.object(db, "get_user"):
+            self.login.search()
+
+        captured = capsys.readouterr()
+        assert "\nThey are not yet a part of the InCollege system yet\n" in captured.out
+
+    def test_search_for_someone_valid_login(self, mocker, capsys, monkeypatch):
+        inputs = ["3", "1", "ben", "land", "1", "1", "blanders1", "Forgaming1!", "4"]
+        monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+
+        user = ["blanders1", "Forgaming1!"]
+        with mocker.patch.object(db, 'get_user', return_value=user):
+            self.login.search()
+
+        captured = capsys.readouterr()
+        assert "Welcome blanders1!" in captured.out
+
+    def test_search_for_someone_invalid_login(self, mocker, capsys, monkeypatch):
+        inputs = ["3", "1", "ben", "land", "1", "1", "notreal", "Forgaming1!", "5"]
+        monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+
+        user = ["notreal", "Forgaming1!"]
+        with mocker.patch.object(db, 'get_user', return_value=user):
+            self.login.search()
+
+        captured = capsys.readouterr()
+        assert "\nUnfortunately, no user was found with the username notreal.\n" in captured.out
+
+    def test_search_for_someone_valid_create_user_valid(self, mocker, capsys, monkeypatch):
+        inputs = ["3", "1", "ben", "land", "1", "2", "TestUserValid", "ValidP@ss1", "cool", "sick", "4"]
+        monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+
+        with mocker.patch.object(db, 'add_user'):
+            self.login.search()
+
+        captured = capsys.readouterr()
+        assert "Welcome TestUserValid!" in captured.out
+    
+    def test_search_for_someone_valid_create_user_invalid_less_than_8_chars(self, mocker, capsys, monkeypatch):
+        inputs = ["3", "1", "ben", "land", "1", "2", "TestUserValid", "P@ss1", "ValidP@ss1", "cool", "sick", "4"]
+        monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+
+        with mocker.patch.object(db, 'add_user'):
+            self.login.search()
+
+        captured = capsys.readouterr()
+        assert "Invalid password please try again: " in captured.out
+
+
+    def test_search_for_someone_valid_create_user_invalid_existing_user(self, monkeypatch, capsys, mocker):
+        inputs = ["3", "1", "ben", "land", "1", "2", "blanders1", "5"]
+        monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+
+        with mocker.patch.object(db, 'add_user'):
+            self.login.search()
+
+        captured = capsys.readouterr()
+        assert "Sorry, this account already exists. Please try again" in captured.out
+
+
+    def test_search_for_someone_valid_create_user_invalid_more_than_12_char(self, monkeypatch, capsys, mocker):
+        inputs = ["3", "1", "ben", "land", "1", "2", "TestUserValid", "longpassValidP@ss1", "ValidP@ss1", "cool", "sick", "4"]
+        monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+
+        with mocker.patch.object(db, 'add_user'):
+            self.login.search()
+
+        captured = capsys.readouterr()
+        assert "Invalid password please try again: " in captured.out
+
+    def test_search_for_someone_valid_create_user_invalid_pass_all_lowercase(self, monkeypatch, capsys, mocker):
+        inputs = ["3", "1", "ben", "land", "1", "2", "TestUserValid", "lowercase1!", "ValidP@ss1", "cool", "sick", "4"]
+        monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+
+        with mocker.patch.object(db, 'add_user'):
+            self.login.search()
+
+        captured = capsys.readouterr()
+        assert "Invalid password please try again: " in captured.out
+
+    def test_search_for_someone_valid_create_user_invalid_pass_no_special_character(self, monkeypatch, capsys, mocker):
+        inputs = ["3", "1", "ben", "land", "1", "2", "TestUserValid", "NoSpecial1", "ValidP@ss1", "cool", "sick", "4"]
+        monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+
+        with mocker.patch.object(db, 'add_user'):
+            self.login.search()
+
+        captured = capsys.readouterr()
+        assert "Invalid password please try again: " in captured.out
+
+    def test_search_for_someone_valid_create_user_invalid_pass_no_numbers(self, monkeypatch, capsys, mocker):
+        inputs = ["3", "1", "ben", "land", "1", "2", "TestUserValid", "NoNumbers!", "ValidP@ss1", "cool", "sick", "4"]
+        monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+
+        with mocker.patch.object(db, 'add_user'):
+            self.login.search()
+
+        captured = capsys.readouterr()
+        assert "Invalid password please try again: " in captured.out
