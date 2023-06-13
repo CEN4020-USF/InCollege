@@ -171,12 +171,12 @@ def count_users(is_mock=False):
     return count
 
 
-def add_job(title, description, employer, location, salary):
+def add_job(title, description, employer, location, salary, created_by):
     conn, cursor = db_connect()
 
     # Execute a query to insert data into the table
-    insert_query = "INSERT INTO Jobs (Title, Description, Employer, Location, Salary) VALUES (?, ?, ?, ?, ?)"
-    values = (title, description, employer, location, salary)
+    insert_query = "INSERT INTO Jobs (Title, Description, Employer, Location, Salary, Created_By) VALUES (?, ?, ?, ?, ?, ?)"
+    values = (title, description, employer, location, salary, created_by)
     cursor.execute(insert_query, values)
 
     db_close(conn, cursor)

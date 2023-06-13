@@ -5,9 +5,9 @@ from Pages import JobOpportunitiesPage as Job
 
 class MainMenu:
     def __init__(self):
-        self.job_page = Job.JobOpportunitiesPage
-        self.connect_page = Connect.ConnectionsPage
-        self.skills_page = Skills.SkillsPage
+        self.job_page = Job.JobOpportunitiesPage()
+        self.connect_page = Connect.ConnectionsPage()
+        self.skills_page = Skills.SkillsPage()
 
     def invalid_response(self, invalid_selection):
         print(f"{invalid_selection} is not a valid option. Please only enter the number")

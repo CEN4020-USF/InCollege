@@ -23,4 +23,4 @@ class ConnectionsPage:
                 ConnectionsPage.load_connections()
         
         elif choice == 2:
-            return menu.MainMenu.main_menu_options
+            return menu.MainMenu().main_menu_options()
