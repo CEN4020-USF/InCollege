@@ -15,6 +15,7 @@ class Login:
     username = ""
 
     def menu(self):
+        db.sign_out_all()
         print("\n** Log-in Page **\n")
         print("#"*100)
         print("# \"When I had just graduated, I had a hard time  trying to get companies to accept me withe no     #")
@@ -95,6 +96,7 @@ class Login:
             self.menu()
         else:
             print(f"\nWelcome {username}! Sending you to the main menu navigation.\n")
+            db.user_signed_in(username)
             Menu.MainMenu().main_menu_options()
 
     def create_account(self):
@@ -141,6 +143,7 @@ class Login:
                         break
                 db.add_user(username, password, first_name.lower(), last_name.lower())
                 print(f"\nWelcome {username}! Sending you to the main menu navigation.\n")
+                db.user_signed_in(username)
                 break
 
         Menu.MainMenu().main_menu_options()

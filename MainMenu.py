@@ -76,10 +76,6 @@ class MainMenu:
 
     def main_menu_options(self):
         while True:
-            print("1.) Your Skill Development")
-            print("2.) Your Connections")
-            print("3.) Job/Internship Opportunities")
-            print("\n4.) Exit")
             self.print_menu()
             choice = int(input("\nPlease enter where you would like to navigate: "))
             is_exit = self.selected_menu_option(choice)

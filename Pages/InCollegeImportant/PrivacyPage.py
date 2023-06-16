@@ -19,7 +19,8 @@ class PrivacyPolicyPage:
             print(f"{choice} is not a supported option. Please try again")
             self.menu()
     def guest_controls_menu(self):
-        if login.username == "":
+        #if login.username == "":
+        if db.is_user_signed_in() == False:
             print("Please sign in to edit settings")
             return
 

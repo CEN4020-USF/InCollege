@@ -223,3 +223,36 @@ def change_language(username, language):
 
     db_close(conn, cursor)
 
+#will set the user who signed in to be signed into the data base based on their user name
+def user_signed_in(username):
+    conn, cursor = db_connect()
+
+    update_query = "UPDATE Users SET is_signed_in = 1 WHERE Username = ?"
+    values = (username,)
+    cursor.execute(update_query, values)
+
+    db_close(conn, cursor)
+
+#sets all users in the data base to be signed out
+def sign_out_all():
+    conn, cursor = db_connect()
+
+    cursor.execute("UPDATE Users SET is_signed_in = 0")
+    conn.commit()
+
+    db_close(conn, cursor)
+
+#checks if there is a user signed in, if so return true else return false
+def is_user_signed_in():
+    conn, cursor = db_connect()
+    flag = False
+
+    cursor.execute("SELECT COUNT(*) FROM Users WHERE is_signed_in = 1")
+    result = cursor.fetchone()[0]
+
+    if result > 0:
+        flag = True
+
+    db_close(conn, cursor)
+    return flag
+    
