@@ -6,8 +6,16 @@ from Pages.Useful import GeneralPage as General
 class AccessibilityPage:
 
     def menu(self):
-        print("under construction")
-        choice = int(input("0.) Return to previous"))
+        print()
+        print("#"*70)
+        print("# Accessibility Statement                                            #")
+        print("#                                                                    #")
+        print("# Our website has been developed with the intention of being         #")
+        print("# used by all possible users, regardless of any disability or age.   #")
+        print("#"*70)
+        print()
+
+        choice = int(input("0.) Return to previous "))
         while True:
             if choice != 0:
                 choice = int(input("\nInvalid input please select number next to navigation link: "))
