@@ -1,4 +1,6 @@
 
+from Pages.Useful import GeneralPage as General
+
 class DeveloperPage:
 
     def menu(self):
@@ -10,4 +12,4 @@ class DeveloperPage:
             else:
                 break
         if choice == 0:
-            return
+            General.GeneralPage().menu()

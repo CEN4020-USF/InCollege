@@ -1,3 +1,5 @@
+from Pages.Useful import GeneralPage as General
+
 
 class CareersPage:
 
@@ -10,4 +12,4 @@ class CareersPage:
             else:
                 break
         if choice == 0:
-            return
+            General.GeneralPage().menu()

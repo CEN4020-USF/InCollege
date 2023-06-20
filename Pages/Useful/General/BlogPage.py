@@ -12,4 +12,4 @@ class BlogPage:
             else:
                 break
         if choice == 0:
-            return
+            General.GeneralPage().menu()
