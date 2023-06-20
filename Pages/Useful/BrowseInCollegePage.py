@@ -14,7 +14,4 @@ class BrowseInCollegePage:
             else:
                 break
         if choice == 0:
-            if db.is_user_signed_in():
-                return
-            else:
-                LoginPage.Login().menu()
+            return

@@ -14,7 +14,4 @@ class DirectoriesPage:
             else:
                 break
         if choice == 0:
-            if db.is_user_signed_in():
-                Menu.MainMenu().main_menu_options()
-            else:
-                LoginPage.Login().menu()
+            return
