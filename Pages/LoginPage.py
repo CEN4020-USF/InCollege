@@ -3,37 +3,80 @@ from Util import session_info as account
 import MainMenu as Menu
 import re
 
+from Pages.Useful import BrowseInCollegePage as Browse, DirectoriesPage as Directory, GeneralPage as General, BusinessSolutionsPage as Business
+from Pages.InCollegeImportant import AccessibilityPage as Accessibility,\
+    BrandPolicyPage as Brand, CopyrightPage as Copyright, \
+    UserAgreementPage as UserAgreement, CookiePolicyPage as Cookie, \
+    CopyrightPolicyPage as CopyPolicy, About as About, \
+    LanguagePage as Lang, PrivacyPage as Privacy
+
 class Login:
-    
+    global username
+    username = ""
+
     def menu(self):
-        print("##################################################")
-        print("# \"When I had just graduated, I had a hard time  #")
-        print("# trying to get companies to accept me withe no  #")
-        print("# experience, but thanks to InCollege, I learned #")
-        print("# skills that employers wanted, and was able to  #")
-        print("# connect with them. I recommend InCollge to all #")
-        print("# students in college that want to get hired as  #")
-        print("# soon as they graduate.\"                        #")
-        print("##################################################")
-        print("Welcome to InCollege: ")
-        print("1.) Sign In")
-        print("2.) Create Account")
-        print("3.) Search for someone you know")
-        print("4.) Why should you join InCollege?")
-        print("5.) Exit")
+        db.sign_out_all()
+        print("\n** Log-in Page **\n")
+        print("#"*100)
+        print("# \"When I had just graduated, I had a hard time  trying to get companies to accept me withe no     #")
+        print("# experience, but thanks to InCollege, I learned skills that employers wanted, and was able to     #")
+        print("# connect with them. I recommend InCollege to all students in college that want to get hired as    #")
+        print("# soon as they graduate.\"                                                                          #")
+        print("#"*100)
+        self.print_menu()
         option = int(input("Enter Option: "))
-        if option == 1:
+        if option == 11:
             self.sign_in()
-        elif option == 2:
+        elif option == 12:
             self.create_account()
-        elif option == 3:
+        elif option == 13:
             self.search()
-        elif option == 4:
+        elif option == 14:
             self.play_video()
-        elif option == 5:
+        elif option == 15:
             Menu.MainMenu().exit()
+
+        elif option == 21:
+            General.GeneralPage().menu()
+        elif option == 22:
+            Browse.BrowseInCollegePage().menu()
+            self.menu()
+        elif option == 23:
+            Business.BusinessSolutionsPage().menu()
+            self.menu()
+        elif option == 24:
+
+            Directory.DirectoriesPage().menu()
+            self.menu()
+        elif option == 31:
+            Copyright.CopyrightPage().menu()
+            self.menu()
+        elif option == 32:
+            About.AboutPage().menu()
+            self.menu()
+        elif option == 33:
+            Accessibility.AccessibilityPage().menu()
+            self.menu()
+        elif option == 34:
+            UserAgreement.UserAgreementPage().menu()
+            self.menu()
+        elif option == 35:
+            Cookie.CookiePolicyPage().menu()
+            self.menu()
+        elif option == 36:
+            CopyPolicy.CopyrightPolicyPage().menu()
+            self.menu()
+        elif option == 37:
+            Brand.BrandPolicyPage().menu()
+            self.menu()
+        elif option == 38:
+            Privacy.PrivacyPolicyPage().menu()
+            self.menu()
+        elif option == 39:
+            Lang.LanguagePage().menu()
+            self.menu()
         else:
-            print(f"{option} is not supported. Please try again")
+            print(f"\n{option} is not supported. Please try again\n")
             self.menu()
 
     def sign_in(self):
@@ -53,6 +96,7 @@ class Login:
             self.menu()
         else:
             print(f"\nWelcome {username}! Sending you to the main menu navigation.\n")
+            db.user_signed_in(username)
             Menu.MainMenu().main_menu_options()
 
     def create_account(self):
@@ -63,6 +107,7 @@ class Login:
             return self.menu()
 
         print("** Create Account **")
+        global username
         username = input("Username: ")
 
         user = db.get_user(username)
@@ -98,6 +143,7 @@ class Login:
                         break
                 db.add_user(username, password, first_name.lower(), last_name.lower())
                 print(f"\nWelcome {username}! Sending you to the main menu navigation.\n")
+                db.user_signed_in(username)
                 break
 
         Menu.MainMenu().main_menu_options()
@@ -162,3 +208,20 @@ class Login:
         elif choice == 2:
             return self.menu()
 
+    def print_menu(self):
+        column_width = 31
+        print("\n")
+        menu = [["Main Menu Options", "Useful Links", "Important InCollege Links"],
+                ["="*column_width, "="*column_width, "="*column_width],
+                ["11.) Sign In", "21.) General", "31.) Copyright Notice"],
+                ["12.) Create Account", "22.) Browse InCollege", "32.) About"],
+                ["13.) Search for people you know", "23.) Business Solutions", "33.) Accessibility"],
+                ["14.) Why join InCollege?", "24.) Directories", "34.) User Agreement"],
+                ["15.) Exit", "", "35.) Cookie Policy"],
+                ["", "", "36.) Copyright Policy"],
+                ["", "", "37.) Brand Policy"],
+                ["", "", "38.) Privacy Policy"],
+                ["", "", "39.) Language Settings"], ]
+        for row in menu:
+            print("{:<31} | {:<31} | {:<31} ".format(*row))
+        print("\n")

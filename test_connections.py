@@ -42,7 +42,7 @@ class TestConnections:
         assert "They are not yet a part of the InCollege system yet" in captured.out
 
     def test_connections_returns_to_menu(self, monkeypatch, capsys, mocker):
-        inputs = ["2", "4"]
+        inputs = ["2", "14"]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         with mocker.patch.object(db, 'check_name', return_value=None):

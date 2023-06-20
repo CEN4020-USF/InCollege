@@ -17,6 +17,6 @@ exit_screen = Menu.MainMenu()
 while is_application_in_use:
     is_application_in_use = login_interface.menu()
 
-exit_screen.exit()
+
 
 
