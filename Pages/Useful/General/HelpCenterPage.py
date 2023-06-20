@@ -12,4 +12,4 @@ class HelpCenterPage:
             else:
                 break
         if choice == 0:
-            General.GeneralPage().menu()
+            return
