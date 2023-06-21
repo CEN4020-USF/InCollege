@@ -1,6 +1,7 @@
 # Import Section
 from Util import db_helper as db
 import MainMenu as menu
+from Pages import LoginPage as login
 
 
 class ConnectionsPage:
@@ -15,6 +16,10 @@ class ConnectionsPage:
             first_name = input("\nPlease enter their first name: ")
             last_name = input("Please enter their last name: ")
             user = db.check_name(first_name.lower(), last_name.lower())
+            target_user = db.get_last_name(last_name.lower())
+            db.add_friend(login.username, target_user)
+            db.add_pending(login.username, target_user)
+            db.delete_friend(login.username, target_user)
             if user:
                 print("\nThey are part of the InCollege system\n")
                 ConnectionsPage.load_connections()
