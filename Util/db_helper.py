@@ -1,4 +1,5 @@
 import sqlite3
+import json
 DB_CONNECTION = "InCollegeDB"
 
 
@@ -18,14 +19,17 @@ def db_close(conn, cursor):
     conn.close()
 
 
-def add_user(username, password, first_name, last_name, email=1, sms=1, advert=1, lang="English"):
+def add_user(username, password, first_name, last_name, major="CS", uni="USF", email=1, sms=1, advert=1,
+             lang="English", sign_in=1, friends="{\"friends\": []}", pending="{\"friends\": []}"):
     conn, cursor = db_connect()
 
     # Execute a query to insert data into the table
     insert_query = \
         "INSERT INTO Users (Username, Password, first_name, last_name," \
-        " EmailEnabled, SMSEnabled, AdvertisingEnabled, Language) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
-    values = (username, password, first_name, last_name, email, sms, advert, lang)
+        " EmailEnabled, SMSEnabled, AdvertisingEnabled, Language, is_signed_in, Major, University," \
+        " Friends, PendingFriends) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    values = (username, password, first_name, last_name, email, sms, advert, lang,
+              sign_in, major, uni, friends, pending)
     cursor.execute(insert_query, values)
 
     db_close(conn, cursor)
@@ -255,4 +259,95 @@ def is_user_signed_in():
 
     db_close(conn, cursor)
     return flag
-    
+
+
+def add_friend(current_user, target_user):
+    conn, cursor = db_connect()
+
+    select_query = "SELECT Friends FROM Users WHERE Username=?"
+    values = (current_user,)
+    cursor.execute(select_query, values)
+    current_user_friends = cursor.fetchone()
+
+    values = (target_user[0],)
+    cursor.execute(select_query, values)
+    target_user_friends = cursor.fetchone()
+
+    if current_user_friends:
+        current_friends_json_str = current_user_friends[0]
+        current_friends_json = json.loads(current_friends_json_str)
+        current_friends_json['friends'].append(target_user[0])
+        current_friends_json = json.dumps(current_friends_json)
+        cursor.execute("UPDATE Users SET Friends=? WHERE Username=?", (current_friends_json, current_user))
+
+        target_friends_json_str = target_user_friends[0]
+        target_friends_json = json.loads(target_friends_json_str)
+        target_friends_json['friends'].append(current_user)
+        target_friends_json = json.dumps(target_friends_json)
+        cursor.execute("UPDATE Users SET Friends=? WHERE Username=?", (target_friends_json, target_user[0]))
+
+        conn.commit()
+    db_close(conn, cursor)
+
+
+def delete_friend(current_user, target_user):
+    conn, cursor = db_connect()
+
+    select_query = "SELECT Friends FROM Users WHERE Username=?"
+    values = (current_user,)
+    cursor.execute(select_query, values)
+    current_user_friends = cursor.fetchone()
+
+    values = (target_user[0],)
+    cursor.execute(select_query, values)
+    target_user_friends = cursor.fetchone()
+
+    if current_user_friends:
+        friends_json = json.loads(current_user_friends[0])
+        if target_user[0] in friends_json['friends']:
+            friends_json['friends'].remove(target_user[0])
+            friends_json_str = json.dumps(friends_json)
+            cursor.execute("UPDATE Users SET Friends=? WHERE Username=?", (friends_json_str, current_user))
+
+        friends_json = json.loads(target_user_friends[0])
+        if current_user in friends_json['friends']:
+            friends_json['friends'].remove(current_user)
+            friends_json_str = json.dumps(friends_json)
+            cursor.execute("UPDATE Users SET Friends=? WHERE Username=?", (friends_json_str, target_user[0]))
+
+        conn.commit()
+
+    db_close(conn, cursor)
+
+
+def add_pending(current_user, target_user):
+    conn, cursor = db_connect()
+
+    select_query = "SELECT PendingFriends FROM Users WHERE Username=?"
+    values = (current_user,)
+    cursor.execute(select_query, values)
+    current_user_friends = cursor.fetchone()
+
+    values = (target_user[0],)
+    cursor.execute(select_query, values)
+    target_user_friends = cursor.fetchone()
+
+    if current_user_friends:
+        current_friends_json_str = current_user_friends[0]
+        current_friends_json = json.loads(current_friends_json_str)
+        current_friends_json['friends'].append(target_user[0])
+        current_friends_json = json.dumps(current_friends_json)
+        cursor.execute("UPDATE Users SET PendingFriends=? WHERE Username=?", (current_friends_json, current_user))
+
+        target_friends_json_str = target_user_friends[0]
+        target_friends_json = json.loads(target_friends_json_str)
+        target_friends_json['friends'].append(current_user)
+        target_friends_json = json.dumps(target_friends_json)
+        cursor.execute("UPDATE Users SET PendingFriends=? WHERE Username=?", (target_friends_json, target_user[0]))
+
+        conn.commit()
+    db_close(conn, cursor)
+
+
+
+
