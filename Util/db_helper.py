@@ -340,7 +340,6 @@ def add_pending(current_user, target_user):
         current_friends_json['friends'].append(target_user[0])
         current_friends_json = json.dumps(current_friends_json)
         cursor.execute("UPDATE Users SET PendingTo=? WHERE Username=?", (current_friends_json, current_user))
-
         target_friends_json_str = target_user_friends[0]
         target_friends_json = json.loads(target_friends_json_str)
         target_friends_json['friends'].append(current_user)
@@ -349,6 +348,38 @@ def add_pending(current_user, target_user):
 
         conn.commit()
     db_close(conn, cursor)
+
+
+def delete_pending(current_user, target_user):
+    conn, cursor = db_connect()
+
+    select_query = "SELECT PendingTo FROM Users WHERE Username=?"
+    values = (current_user,)
+    cursor.execute(select_query, values)
+    current_user_friends = cursor.fetchone()
+
+    select_query = "SELECT PendingFrom FROM Users WHERE Username=?"
+    values = (target_user[0],)
+    cursor.execute(select_query, values)
+    target_user_friends = cursor.fetchone()
+
+    if current_user_friends:
+        current_friends_json_str = current_user_friends[0]
+        current_friends_json = json.loads(current_friends_json_str)
+        if target_user[0] in current_friends_json['friends']:
+            current_friends_json['friends'].remove(target_user[0])
+            current_friends_json = json.dumps(current_friends_json)
+            cursor.execute("UPDATE Users SET PendingTo=? WHERE Username=?", (current_friends_json, current_user))
+        target_friends_json_str = target_user_friends[0]
+        target_friends_json = json.loads(target_friends_json_str)
+        if current_user in target_friends_json['friends']:
+            target_friends_json['friends'].remove(current_user)
+            target_friends_json = json.dumps(target_friends_json)
+            cursor.execute("UPDATE Users SET PendingFrom=? WHERE Username=?", (target_friends_json, target_user[0]))
+
+        conn.commit()
+    db_close(conn, cursor)
+
 
 
 
