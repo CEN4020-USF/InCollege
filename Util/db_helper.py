@@ -409,6 +409,61 @@ def delete_pending(current_user, target_user):
     db_close(conn, cursor)
 
 
+def get_friends(username):
+    conn, cursor = db_connect()
+
+    select_query = "SELECT Friends FROM Users WHERE Username = ?"
+    values = (username,)
+    cursor.execute(select_query, values)
+
+    result = cursor.fetchone()
+    if result:
+        friends_json_str = result[0]
+        friends_json = json.loads(friends_json_str)
+        friends_list = friends_json.get('friends', [])
+    else:
+        friends_list = []
+
+    db_close(conn, cursor)
+    return friends_list
+
+
+def get_pending_to(username):
+    conn, cursor = db_connect()
+
+    select_query = "SELECT PendingTo FROM Users WHERE Username = ?"
+    values = (username,)
+    cursor.execute(select_query, values)
+
+    result = cursor.fetchone()
+    if result:
+        friends_json_str = result[0]
+        friends_json = json.loads(friends_json_str)
+        friends_list = friends_json.get('friends', [])
+    else:
+        friends_list = []
+
+    db_close(conn, cursor)
+    return friends_list
+
+
+def get_pending_from(username):
+    conn, cursor = db_connect()
+
+    select_query = "SELECT PendingFrom FROM Users WHERE Username = ?"
+    values = (username,)
+    cursor.execute(select_query, values)
+
+    result = cursor.fetchone()
+    if result:
+        friends_json_str = result[0]
+        friends_json = json.loads(friends_json_str)
+        friends_list = friends_json.get('friends', [])
+    else:
+        friends_list = []
+
+    db_close(conn, cursor)
+    return friends_list
 
 
 

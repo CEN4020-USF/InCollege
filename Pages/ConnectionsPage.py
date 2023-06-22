@@ -34,7 +34,7 @@ class ConnectionsPage:
             self.load_connections()
 
     def find_users_by_last_name(self):
-        last_name = input("Please enter last name: ")
+        last_name = input("Please Enter Last Name: ")
         users = db.get_last_name(last_name.lower())
         if len(users) == 0:
             print(f"There were no users found with the last name, {last_name}")
@@ -43,9 +43,21 @@ class ConnectionsPage:
         return
 
     def find_users_by_major(self):
+        major = input("Please Enter Major: ")
+        users = db.get_by_major(major)
+        if len(users) == 0:
+            print(f"There were no users found majoring in {major}")
+            return
+        self.print_users(users)
         return
 
     def find_users_by_university(self):
+        university = input("Please Enter University: ")
+        users = db.get_by_university(university.lower())
+        if len(users) == 0:
+            print(f"There were no users found at {university}")
+            return
+        self.print_users(users)
         return
 
     @staticmethod
@@ -55,11 +67,28 @@ class ConnectionsPage:
         if target_user is None:
             print("User does not exist. Please search for users.")
             return
+        if target_user[0] == login.username:
+            print("\nYou can not friend yourself. Try Again.")
+            return
+        if target_user[0] in db.get_friends(login.username) or target_user[0] in db.get_pending_to(login.username):
+            print("Looks like you are either already friends or awaiting user to accept friend request. Please try again later")
+            return
         print(f"You sent a friend request to {target_user[0]}. Waiting on their response.")
         db.add_pending(login.username, target_user)
         return
 
-    def print_users(self, users):
+    @staticmethod
+    def print_users(users):
+        column_width = 25
+        print("\n")
         print("Users Found")
-        print("Username | First Name | Last Name | University | Major")
+        menu = [["Username", "First Name", "Last Name", "University", "Major"],
+                ["=" * column_width, "=" * column_width, "=" * column_width, "=" * column_width, "=" * column_width, ]]
+        for user in users:
+            user = db.get_user(user)
+            user_attributes = [user[0], user[2], user[3], user[10], user[9]]
+            menu.append(user_attributes)
+        for row in menu:
+            print("{:<25} | {:<25} | {:<25} | {:<25} | {:<25}".format(*row))
+        print("\n")
         return
