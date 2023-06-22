@@ -107,15 +107,43 @@ def get_first_name(firstname):
 def get_last_name(lastname):
     conn, cursor = db_connect()
 
-    select_query = "SELECT * FROM Users WHERE last_name = ?"
+    select_query = "SELECT Username FROM Users WHERE last_name = ?"
     values = (lastname,)
     cursor.execute(select_query, values)
 
-    user = cursor.fetchone()
+    usernames = [row[0] for row in cursor.fetchall()]
 
     db_close(conn, cursor)
 
-    return user
+    return usernames
+
+
+def get_by_university(university):
+    conn, cursor = db_connect()
+
+    select_query = "SELECT Username FROM Users WHERE University = ?"
+    values = (university,)
+    cursor.execute(select_query, values)
+
+    usernames = [row[0] for row in cursor.fetchall()]
+
+    db_close(conn, cursor)
+
+    return usernames
+
+
+def get_by_major(major):
+    conn, cursor = db_connect()
+
+    select_query = "SELECT Username FROM Users WHERE Major = ?"
+    values = (major,)
+    cursor.execute(select_query, values)
+
+    usernames = [row[0] for row in cursor.fetchall()]
+
+    db_close(conn, cursor)
+
+    return usernames
 
 
 def count_users():
@@ -381,6 +409,61 @@ def delete_pending(current_user, target_user):
     db_close(conn, cursor)
 
 
+def get_friends(username):
+    conn, cursor = db_connect()
+
+    select_query = "SELECT Friends FROM Users WHERE Username = ?"
+    values = (username,)
+    cursor.execute(select_query, values)
+
+    result = cursor.fetchone()
+    if result:
+        friends_json_str = result[0]
+        friends_json = json.loads(friends_json_str)
+        friends_list = friends_json.get('friends', [])
+    else:
+        friends_list = []
+
+    db_close(conn, cursor)
+    return friends_list
+
+
+def get_pending_to(username):
+    conn, cursor = db_connect()
+
+    select_query = "SELECT PendingTo FROM Users WHERE Username = ?"
+    values = (username,)
+    cursor.execute(select_query, values)
+
+    result = cursor.fetchone()
+    if result:
+        friends_json_str = result[0]
+        friends_json = json.loads(friends_json_str)
+        friends_list = friends_json.get('friends', [])
+    else:
+        friends_list = []
+
+    db_close(conn, cursor)
+    return friends_list
+
+
+def get_pending_from(username):
+    conn, cursor = db_connect()
+
+    select_query = "SELECT PendingFrom FROM Users WHERE Username = ?"
+    values = (username,)
+    cursor.execute(select_query, values)
+
+    result = cursor.fetchone()
+    if result:
+        friends_json_str = result[0]
+        friends_json = json.loads(friends_json_str)
+        friends_list = friends_json.get('friends', [])
+    else:
+        friends_list = []
+
+    db_close(conn, cursor)
+    return friends_list
 
 
 
