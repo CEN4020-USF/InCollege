@@ -107,15 +107,43 @@ def get_first_name(firstname):
 def get_last_name(lastname):
     conn, cursor = db_connect()
 
-    select_query = "SELECT * FROM Users WHERE last_name = ?"
+    select_query = "SELECT Username FROM Users WHERE last_name = ?"
     values = (lastname,)
     cursor.execute(select_query, values)
 
-    user = cursor.fetchone()
+    usernames = [row[0] for row in cursor.fetchall()]
 
     db_close(conn, cursor)
 
-    return user
+    return usernames
+
+
+def get_by_university(university):
+    conn, cursor = db_connect()
+
+    select_query = "SELECT Username FROM Users WHERE University = ?"
+    values = (university,)
+    cursor.execute(select_query, values)
+
+    usernames = [row[0] for row in cursor.fetchall()]
+
+    db_close(conn, cursor)
+
+    return usernames
+
+
+def get_by_major(major):
+    conn, cursor = db_connect()
+
+    select_query = "SELECT Username FROM Users WHERE Major = ?"
+    values = (major,)
+    cursor.execute(select_query, values)
+
+    usernames = [row[0] for row in cursor.fetchall()]
+
+    db_close(conn, cursor)
+
+    return usernames
 
 
 def count_users():

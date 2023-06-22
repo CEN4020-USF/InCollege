@@ -101,7 +101,7 @@ class Login:
 
     def create_account(self):
         num_of_users = db.count_users()
-        if num_of_users >= 5:
+        if num_of_users >= 10:
             print("\n** WARNING **")
             print("We are not creating new accounts at this time. Please Sign in to existing account\n")
             return self.menu()
