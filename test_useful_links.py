@@ -15,7 +15,7 @@ class TestUsefulLinks:
         self.login = LoginPage.Login()
 
     def test_navigation_browse_in_college(self, monkeypatch, capsys, mocker):
-        inputs = [22, 0, 14]
+        inputs = [22, 0, 15]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
@@ -28,7 +28,7 @@ class TestUsefulLinks:
         assert "under construction" in captured.out
 
     def test_navigation_business_solutions(self, monkeypatch, capsys, mocker):
-        inputs = [23, 0, 14]
+        inputs = [23, 0, 15]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
@@ -41,7 +41,7 @@ class TestUsefulLinks:
         assert "under construction" in captured.out
 
     def test_navigation_directories(self, monkeypatch, capsys, mocker):
-        inputs = [24, 0, 14]
+        inputs = [24, 0, 15]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
@@ -54,7 +54,7 @@ class TestUsefulLinks:
         assert "under construction" in captured.out
 
     def test_navigation_general_sign_up_already_signed_in(self, monkeypatch, capsys, mocker):
-        inputs = [21, 1, 0, 14]
+        inputs = [21, 1, 0, 15]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
@@ -68,7 +68,7 @@ class TestUsefulLinks:
         assert "**It seems you are already signed in.**" in captured.out
 
     def test_navigation_general_help_center(self, monkeypatch, capsys, mocker):
-        inputs = [21, 2, 0, 0, 14]
+        inputs = [21, 2, 0, 0, 15]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
@@ -81,7 +81,7 @@ class TestUsefulLinks:
         assert "We're here to help!" in captured.out
 
     def test_navigation_general_about(self, monkeypatch, capsys, mocker):
-        inputs = [21, 3, 0, 0, 14]
+        inputs = [21, 3, 0, 0, 15]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
@@ -94,7 +94,7 @@ class TestUsefulLinks:
         assert "In College: Welcome to In College, the world's largest college student network with many users in many countries and territories worldwide." in captured.out
 
     def test_navigation_general_press(self, monkeypatch, capsys, mocker):
-        inputs = [21, 4, 0, 0, 14]
+        inputs = [21, 4, 0, 0, 15]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
@@ -107,7 +107,7 @@ class TestUsefulLinks:
         assert "In College Pressroom: Stay on top of the latest news, updates, and reports" in captured.out
 
     def test_navigation_general_blog(self, monkeypatch, capsys, mocker):
-        inputs = [21, 5, 0, 0, 14]
+        inputs = [21, 5, 0, 0, 15]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
@@ -120,7 +120,7 @@ class TestUsefulLinks:
         assert "under construction" in captured.out
 
     def test_navigation_general_careers(self, monkeypatch, capsys, mocker):
-        inputs = [21, 6, 0, 0, 14]
+        inputs = [21, 6, 0, 0, 15]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
@@ -133,7 +133,7 @@ class TestUsefulLinks:
         assert "under construction" in captured.out
 
     def test_navigation_general_developers(self, monkeypatch, capsys, mocker):
-        inputs = [21, 7, 0, 0, 14]
+        inputs = [21, 7, 0, 0, 15]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
