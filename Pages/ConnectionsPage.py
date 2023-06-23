@@ -12,7 +12,7 @@ class ConnectionsPage:
         print("2.) Search by University")
         print("3.) Search by Major")
         print("4.) Connect to User")
-        print("0.) No return to previous")
+        print("0.) Return to previous")
 
         choice = input("\nPlease Enter Choice: ")
         if choice == "1":
@@ -44,7 +44,7 @@ class ConnectionsPage:
 
     def find_users_by_major(self):
         major = input("Please Enter Major: ")
-        users = db.get_by_major(major)
+        users = db.get_by_major(major.lower())
         if len(users) == 0:
             print(f"There were no users found majoring in {major}")
             return
