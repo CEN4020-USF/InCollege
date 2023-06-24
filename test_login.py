@@ -58,11 +58,11 @@ class TestMenu:
 
     def test_create_account_more_than_5_users(self, monkeypatch, capsys, mocker):
 
-        inputs = ["12"]
+        inputs = ["15"]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Run the create_account function
-        with mocker.patch.object(db, 'count_users', return_value=6):
+        with mocker.patch.object(db, 'count_users', return_value=11):
             self.login.create_account()
 
         # Capture the output

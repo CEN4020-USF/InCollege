@@ -55,28 +55,63 @@ class TestConnections:
         # Validate the output
         assert "You sent a friend request to" in captured.out
 
-    def test_sent_request_already_friend(self, monkeypatch, capsys, mocker):
-        inputs = ["4", "rm", "0", 15]
+    def test_sent_self_request(self, monkeypatch, capsys, mocker):
+        inputs = ["11", "blanders1", "Forgaming1!", "12", "4", "blanders1", "0", 15]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
+        # Run the create_account function
         user = ["blanders1", "Forgaming1!"]
-        with mocker.patch.object(db, 'get_user', return_value=user):
-            self.connections.load_connections()
+        with mocker.patch.object(db, 'is_user_signed_in', return_value=user):
+            self.login.menu()
         # Capture the output
         captured = capsys.readouterr()
 
         # Validate the output
-        assert "Looks like you are either already friends or awaiting user to accept friend request" in captured.out
+        assert "You can not friend yourself. Try Again." in captured.out
+
+    def test_sent_request_already_friend(self, monkeypatch, capsys, mocker):
+        inputs = ["11", "blanders1", "Forgaming1!", "12", "4", "test", "4", "test", "0", 15]
+        monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+
+        user = ["benjamin", "landers"]
+        with mocker.patch.object(db, 'check_name', return_value=user):
+            self.login.menu()
+        # Capture the output
+        captured = capsys.readouterr()
+
+        # Validate the output
+        assert "Looks like you are either already friends or awaiting user to accept friend request." in captured.out
 
 
     def test_connections_returns_to_menu(self, monkeypatch, capsys, mocker):
-        inputs = ["0"]
+        inputs = ["11", "blanders1", "Forgaming1!", "12", "0", 15]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         with mocker.patch.object(db, 'check_name', return_value=None):
-            self.connections.load_connections()
+            self.login.menu()
 
         # Capture the output
         captured = capsys.readouterr()
         # Validate the output
-        assert "1.) Your Skill Development" in captured.out
+        assert "##################################################" in captured.out
+
+    def test_pending_friend_request_accept(self, monkeypatch, capsys, mocker):
+        inputs = [11, "blanders1", "Forgaming1!", "12", "4", "test" "0", 15]
+
+        user = ["benjamin", "landers"]
+        with mocker.patch.object(db, 'check_name', return_value=user):
+            self.login.menu()
+        
+        #input second to check if test got friend request
+        inputs = [11, "test" , "Password1!", "y", 15]
+        monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+
+
+        user = ["benjamin", "landers"]
+        with mocker.patch.object(db, 'check_name', return_value=user):
+            self.login.menu()
+        # Capture the output
+        captured = capsys.readouterr()
+
+        # Validate the output
+        assert "has sent you a friend request. Would you like to accept?" in captured.out
