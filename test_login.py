@@ -85,7 +85,7 @@ class TestMenu:
 
 
     def test_create_account_invalid_pass_more_than_12_char(self, monkeypatch, capsys, mocker):
-        inputs = ["TestUserInvalid", "ThisIsAVeryLongPass!1", "ValidP@ss1", "TestFirst", "TestLast",  "15"]
+        inputs = ["TestUserInvalid", "ThisIsAVeryLongPass!1", "ValidP@ss1",  "TestFirst", "TestLast", "USF", "CE",  "15"]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         with mocker.patch.object(db, "add_user"):
@@ -96,7 +96,7 @@ class TestMenu:
 
 
     def test_create_account_invalid_pass_less_than_8_char(self, monkeypatch, capsys, mocker):
-        inputs = ["TestUserInvalid", "Short1!", "ValidP@ss1", "TestFirst", "TestLast",  "15"]
+        inputs = ["TestUserInvalid", "Short1!", "ValidP@ss1", "TestFirst", "TestLast", "USF", "CE",  "15"]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         with mocker.patch.object(db, "add_user"):
@@ -106,7 +106,7 @@ class TestMenu:
         assert "Invalid password please try again: " in captured.out
 
     def test_create_account_invalid_pass_all_lowercase(self, monkeypatch, capsys, mocker):
-        inputs = ["TestUserInvalid", "lowercase1!", "ValidP@ss1", "TestFirst", "TestLast",  "15"]
+        inputs = ["TestUserInvalid", "lowercase1!", "ValidP@ss1", "TestFirst", "TestLast", "USF", "CE",  "15"]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         with mocker.patch.object(db, "add_user"):
@@ -116,7 +116,7 @@ class TestMenu:
         assert "Invalid password please try again: " in captured.out
 
     def test_create_account_invalid_pass_no_special_character(self, monkeypatch, capsys, mocker):
-        inputs = ["TestUserInvalid", "NoSpecial1", "ValidP@ss1", "TestFirst", "TestLast",  "15"]
+        inputs = ["TestUserInvalid", "NoSpecial1", "ValidP@ss1", "TestFirst", "TestLast", "USF", "CE",  "15"]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         with mocker.patch.object(db, "add_user"):
@@ -126,7 +126,7 @@ class TestMenu:
         assert "Invalid password please try again: " in captured.out
 
     def test_create_account_invalid_pass_no_numbers(self, monkeypatch, capsys, mocker):
-        inputs = ["TestUserInvalid", "NoNumbers!", "ValidP@ss1", "TestFirst", "TestLast",  "15"]
+        inputs = ["TestUserInvalid", "NoNumbers!", "ValidP@ss1", "TestFirst", "TestLast", "USF", "CE",  "15"]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         with mocker.patch.object(db, "add_user"):
@@ -136,7 +136,27 @@ class TestMenu:
         assert "Invalid password please try again: " in captured.out
 
     def test_create_account_valid(self, mocker, capsys, monkeypatch):
-        inputs = ["TestUserValid", "ValidP@ss1", "First", "Last", "15"]
+        inputs = ["TestUserValid", "ValidP@ss1", "First", "Last", "USF", "CE", "15"]
+        monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+
+        with mocker.patch.object(db, "add_user"):
+            self.login.create_account()
+
+        captured = capsys.readouterr()
+        assert "Sending you to the main menu navigation" in captured.out
+
+    def test_create_account_University_valid_input(self, mocker, capsys, monkeypatch):
+        inputs = ["TestUserValid", "ValidP@ss1", "First", "Last", "USF", "CE", "15"]
+        monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+
+        with mocker.patch.object(db, "add_user"):
+            self.login.create_account()
+
+        captured = capsys.readouterr()
+        assert "Sending you to the main menu navigation" in captured.out
+
+    def test_create_account_Major_valid_input(self, mocker, capsys, monkeypatch):
+        inputs = ["TestUserValid", "ValidP@ss1", "First", "Last", "USF", "CE", "15"]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         with mocker.patch.object(db, "add_user"):

@@ -18,8 +18,8 @@ class TestUsefulLinks:
 
         # Mocking the get_user method to return a user with matching credentials
         user = ["john", "Password123"]
-        with mocker.patch.object(db, 'get_user', return_value=user):
-            self.menu.main_menu_options()
+        with mocker.patch.object(db, 'is_user_signed_in', return_value=False):
+            self.login.menu()
 
         # Capturing printed output and asserting expected result
         captured = capsys.readouterr()
@@ -31,8 +31,8 @@ class TestUsefulLinks:
 
         # Mocking the get_user method to return a user with matching credentials
         user = ["john", "Password123"]
-        with mocker.patch.object(db, 'get_user', return_value=user):
-            self.menu.main_menu_options()
+        with mocker.patch.object(db, 'is_user_signed_in', return_value=False):
+            self.login.menu()
 
         # Capturing printed output and asserting expected result
         captured = capsys.readouterr()
@@ -44,8 +44,8 @@ class TestUsefulLinks:
 
         # Mocking the get_user method to return a user with matching credentials
         user = ["john", "Password123"]
-        with mocker.patch.object(db, 'get_user', return_value=user):
-            self.menu.main_menu_options()
+        with mocker.patch.object(db, 'is_user_signed_in', return_value=False):
+            self.login.menu()
 
         # Capturing printed output and asserting expected result
         captured = capsys.readouterr()
@@ -57,8 +57,8 @@ class TestUsefulLinks:
 
         # Mocking the get_user method to return a user with matching credentials
         user = ["john", "Password123"]
-        with mocker.patch.object(db, 'get_user', return_value=user):
-            self.menu.main_menu_options()
+        with mocker.patch.object(db, 'is_user_signed_in', return_value=False):
+            self.login.menu()
 
         # Capturing printed output and asserting expected result
         captured = capsys.readouterr()
@@ -70,8 +70,8 @@ class TestUsefulLinks:
 
         # Mocking the get_user method to return a user with matching credentials
         user = ["john", "Password123"]
-        with mocker.patch.object(db, 'get_user', return_value=user):
-            self.menu.main_menu_options()
+        with mocker.patch.object(db, 'is_user_signed_in', return_value=False):
+            self.login.menu()
 
         # Capturing printed output and asserting expected result
         captured = capsys.readouterr()
@@ -83,8 +83,8 @@ class TestUsefulLinks:
 
         # Mocking the get_user method to return a user with matching credentials
         user = ["john", "Password123"]
-        with mocker.patch.object(db, 'get_user', return_value=user):
-            self.menu.main_menu_options()
+        with mocker.patch.object(db, 'is_user_signed_in', return_value=False):
+            self.login.menu()
 
         # Capturing printed output and asserting expected result
         captured = capsys.readouterr()
@@ -96,8 +96,8 @@ class TestUsefulLinks:
 
         # Mocking the get_user method to return a user with matching credentials
         user = ["john", "Password123"]
-        with mocker.patch.object(db, 'get_user', return_value=user):
-            self.menu.main_menu_options()
+        with mocker.patch.object(db, 'is_user_signed_in', return_value=False):
+            self.login.menu()
 
         # Capturing printed output and asserting expected result
         captured = capsys.readouterr()
@@ -138,7 +138,8 @@ class TestUsefulLinks:
         with mocker.patch.object(db, 'is_user_signed_in', return_value=True):
             with mocker.patch.object(db, 'get_user', return_value=user):
                 with mocker.patch.object(db, 'change_language'):
-                    self.menu.main_menu_options()
+                    with mocker.patch.object(db, "get_pending_from", return_value=None):
+                        self.menu.main_menu_options()
 
         # Capturing printed output and asserting expected result
         captured = capsys.readouterr()
@@ -153,7 +154,8 @@ class TestUsefulLinks:
         with mocker.patch.object(db, 'is_user_signed_in', return_value=True):
             with mocker.patch.object(db, 'get_user', return_value=user):
                 with mocker.patch.object(db, 'change_language'):
-                    self.menu.main_menu_options()
+                    with mocker.patch.object(db, "get_pending_from", return_value=None):
+                        self.menu.main_menu_options()
 
         # Capturing printed output and asserting expected result
         captured = capsys.readouterr()
@@ -225,3 +227,5 @@ class TestUsefulLinks:
         # Capturing printed output and asserting expected result
         captured = capsys.readouterr()
         assert "Targeted Advertising Updated" in captured.out
+
+    

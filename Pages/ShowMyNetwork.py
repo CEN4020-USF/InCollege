@@ -42,6 +42,7 @@ class ShowMyNetworkPage:
             return
         deleted_friend = db.get_user(deleted_friend)
         db.delete_friend(login.username, deleted_friend)
+        print(f"We have removed {deleted_friend} from your friends list!")
         return
 
     def delete_pending(self):

@@ -56,11 +56,11 @@ class TestConnections:
         assert "You sent a friend request to" in captured.out
 
     def test_sent_self_request(self, monkeypatch, capsys, mocker):
-        inputs = ["11", "blanders1", "Forgaming1!", "12", "4", "blanders1", "0", 15]
+        inputs = ["11", "test", "Password1!", "12", "4", "test", "0", 15]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Run the create_account function
-        user = ["blanders1", "Forgaming1!"]
+        user = ["test", "Password1!"]
         with mocker.patch.object(db, 'is_user_signed_in', return_value=user):
             self.login.menu()
         # Capture the output
@@ -84,7 +84,7 @@ class TestConnections:
 
 
     def test_connections_returns_to_menu(self, monkeypatch, capsys, mocker):
-        inputs = ["11", "blanders1", "Forgaming1!", "12", "0", 15]
+        inputs = ["11", "test", "Password1!", "12", "0", 15]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         with mocker.patch.object(db, 'check_name', return_value=None):
@@ -95,23 +95,121 @@ class TestConnections:
         # Validate the output
         assert "##################################################" in captured.out
 
+
+    def test_pending_friend_request_decline(self, monkeypatch, capsys, mocker):
+        inputs = ["11", "test", "Password1!", "n", 15]
+        monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+
+        user =["jimmy"]
+        with mocker.patch.object(db, "get_pending_from", return_value=user):
+            self.login.menu()
+
+        captured = capsys.readouterr()
+
+        # Validate the output
+        assert "has been removed from your pending friend requests" in captured.out
+
     def test_pending_friend_request_accept(self, monkeypatch, capsys, mocker):
-        inputs = [11, "blanders1", "Forgaming1!", "12", "4", "test" "0", 15]
+        inputs = ["11", "test", "Password1!", "y", 15]
+        monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+
+        user_from =["jimmy"]
+        user_to = ["test"]
+        with mocker.patch.object(db, "get_pending_from", return_value=user_from):
+            with mocker.patch.object(db, "get_pending_to", return_value=user_to):
+                with mocker.patch.object(db, "get_friends", return_value=None):
+                    self.login.menu()
+        
+
+        captured = capsys.readouterr()
+
+        # Validate the output
+        assert "has been added" in captured.out
+
+    def test_pending_friend_request_invalid_input(self, monkeypatch, capsys, mocker):
+        inputs = ["11", "test", "Password1!", "jank", 15]
+        monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+
+        user_from =["jimmy"]
+        user_to = ["test"]
+        with mocker.patch.object(db, "get_pending_from", return_value=user_from):
+            with mocker.patch.object(db, "get_pending_to", return_value=user_to):
+                with mocker.patch.object(db, "get_friends", return_value=None):
+                    self.login.menu()
+        
+
+        captured = capsys.readouterr()
+
+        # Validate the output
+        assert "Please select a valid option (Only enter a Y or N)" in captured.out
+
+    def test_check_pending_requests(self, monkeypatch, capsys, mocker):
+        inputs = ["11", "test", "Password1!", "12", "4", 'jimmy', "0", "14", "1", "0", 15]
+        monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         user = ["benjamin", "landers"]
         with mocker.patch.object(db, 'check_name', return_value=user):
             self.login.menu()
-        
-        #input second to check if test got friend request
-        inputs = [11, "test" , "Password1!", "y", 15]
+    
+        captured = capsys.readouterr()
+
+        # Validate the output
+        assert "Your Pending Friend Requests" in captured.out
+
+    def test_searchBy_University_pass(self, monkeypatch, capsys, mocker):
+        inputs = ["11", "test", "Password1!", "12", "2", "USF", "0", 15]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
-
-        user = ["benjamin", "landers"]
-        with mocker.patch.object(db, 'check_name', return_value=user):
+        user = ["test", "Password1!"]
+        with mocker.patch.object(db, 'is_user_signed_in', return_value=user):
             self.login.menu()
         # Capture the output
         captured = capsys.readouterr()
 
         # Validate the output
-        assert "has sent you a friend request. Would you like to accept?" in captured.out
+        assert "Users Found" in captured.out
+
+    def test_searchBy_University_fail(self, monkeypatch, capsys, mocker):
+        inputs = ["11", "test", "Password1!", "12", "2", "DummyStateUniversity", "0", 15]
+        monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+
+        user = ["test", "Password1!"]
+        with mocker.patch.object(db, 'is_user_signed_in', return_value=user):
+            self.login.menu()
+        # Capture the output
+        captured = capsys.readouterr()
+
+        # Validate the output
+        assert "There were no users found at" in captured.out
+
+    def test_searchBy_Major_Pass(self, monkeypatch, capsys, mocker):
+        inputs = ["11", "test", "Password1!", "12", "3", "ce", "0", 15]
+        monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+
+        user = ["test", "Password1!"]
+        with mocker.patch.object(db, 'is_user_signed_in', return_value=user):
+            self.login.menu()
+        # Capture the output
+        captured = capsys.readouterr()
+
+        # Validate the output
+        assert "Users Found" in captured.out
+
+    def test_searchBy_Major_fail(self, monkeypatch, capsys, mocker):
+        inputs = ["11", "test", "Password1!", "12", "3", "LoserDegree", "0", 15]
+        monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+
+        user = ["test", "Password1!"]
+        with mocker.patch.object(db, 'is_user_signed_in', return_value=user):
+            self.login.menu()
+        # Capture the output
+        captured = capsys.readouterr()
+
+        # Validate the output
+        assert "There were no users found majoring in" in captured.out
+
+    
+
+
+
+    
