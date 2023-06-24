@@ -137,11 +137,13 @@ class Login:
                     check = db.check_name(first_name.lower(), last_name.lower())
                     if check:
                         print("This person already exists in our system. Please make a new name.")
-                        first_name = input("First name:")
+                        first_name = input("First name: ")
                         last_name = input("Last name: ")
                     else:
                         break
-                db.add_user(username, password, first_name.lower(), last_name.lower())
+                university = input("Your University: ").lower()
+                major = input("Your Major: ").lower()
+                db.add_user(username, password, first_name.lower(), last_name.lower(), major, university)
                 print(f"\nWelcome {username}! Sending you to the main menu navigation.\n")
                 db.user_signed_in(username)
                 break
