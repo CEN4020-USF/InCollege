@@ -56,7 +56,7 @@ class TestMenu:
         captured = capsys.readouterr()
         assert "Invalid Password" in captured.out
 
-    def test_create_account_more_than_5_users(self, monkeypatch, capsys, mocker):
+    def test_create_account_more_than_10_users(self, monkeypatch, capsys, mocker):
 
         inputs = ["15"]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
