@@ -37,6 +37,9 @@ class MainMenu:
             self.network.load_my_network()
             return True
         elif user_choice == 15:
+            self.profile.load_profiles()
+            return True
+        elif user_choice == 16:
             return False
         elif user_choice == 21:
             General.GeneralPage().menu()
@@ -88,7 +91,7 @@ class MainMenu:
             self.print_menu()
             choice = int(input("\nPlease enter where you would like to navigate: "))
             is_exit = self.selected_menu_option(choice)
-            if (choice == 15):
+            if (choice == 16):
                 return self.exit()
         
     @staticmethod
@@ -111,8 +114,8 @@ class MainMenu:
                 ["12.) Your Connections", "22.) Browse InCollege", "32.) About"],
                 ["13.) Job/Internship Prospects", "23.) Business Solutions", "33.) Accessibility"],
                 ["14.) Show My Network", "24.) Directories", "34.) User Agreement"],
-                ["15.) Exit", "", "35.) Cookie Policy"],
-                ["", "", "36.) Copyright Policy"],
+                ["15.) Show Profiles", "", "35.) Cookie Policy"],
+                ["16.) Exit", "", "36.) Copyright Policy"],
                 ["", "", "37.) Brand Policy"],
                 ["", "", "38.) Privacy Policy"],
                 ["", "", "39.) Language Settings"], ]

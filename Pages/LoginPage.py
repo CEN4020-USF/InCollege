@@ -141,9 +141,7 @@ class Login:
                         last_name = input("Last name: ")
                     else:
                         break
-                university = input("Your University: ").lower()
-                major = input("Your Major: ").lower()
-                db.add_user(username, password, first_name.lower(), last_name.lower(), major, university)
+                db.add_user(username, password, first_name.lower(), last_name.lower())
                 print(f"\nWelcome {username}! Sending you to the main menu navigation.\n")
                 db.user_signed_in(username)
                 break
