@@ -146,7 +146,7 @@ def get_by_major(major):
     return usernames
 
 
-def count_tblUsers():
+def count_users():
     conn, cursor = db_connect()
 
     count_query = "SELECT COUNT(*) FROM tblUsers"
@@ -159,12 +159,13 @@ def count_tblUsers():
     return count
 
 
-def add_job(title, description, employer, location, salary, created_by):
+def add_job(title, description, employer, location, salary, created_by, date_started, date_ended):
     conn, cursor = db_connect()
 
     # Execute a query to insert data into the table
-    insert_query = "INSERT INTO tblJobs (Title, Description, Employer, Location, Salary, CreatedBy) VALUES (?, ?, ?, ?, ?, ?)"
-    values = (title, description, employer, location, salary, created_by)
+    insert_query = "INSERT INTO tblJobs (Title, Description, Employer, Location, Salary, CreatedBy, DateStarted," \
+                   " DateEnded) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+    values = (title, description, employer, location, salary, created_by, date_started, date_ended)
     cursor.execute(insert_query, values)
 
     db_close(conn, cursor)
@@ -190,21 +191,21 @@ def edit_job(job_id, company, position, salary):
     db_close(conn, cursor)
 
 
-def get_job(job_id):
+def get_job_by_user(created_by):
     conn, cursor = db_connect()
 
-    select_query = "SELECT * FROM tblJobs WHERE id = ?"
-    values = (job_id,)
+    select_query = "SELECT * FROM tblJobs WHERE CreatedBy = ? LIMIT 3"
+    values = (created_by,)
     cursor.execute(select_query, values)
 
-    job = cursor.fetchone()
+    job = [row[0] for row in cursor.fetchall()]
 
     db_close(conn, cursor)
 
     return job
 
 
-def count_tblJobs():
+def count_jobs():
     conn, cursor = db_connect()
 
     count_query = "SELECT COUNT(*) FROM tblJobs"
@@ -465,5 +466,61 @@ def get_pending_from(username):
     db_close(conn, cursor)
     return friends_list
 
+def get_user_profile(username):
+    conn, cursor = db_connect()
+
+    update_query = f"SELECT * FROM tblUserProfiles WHERE Username = ?"
+    values = (username,)
+    cursor.execute(update_query, values)
+
+    profile = cursor.fetchone()
+
+    db_close(conn, cursor)
+
+    return profile
+
+def set_user_profile(username, column, update):
+    conn, cursor = db_connect()
+
+    update_query = f"UPDATE tblUserProfiles SET {column} = {update} WHERE Username = ?"
+    values = (username,)
+    cursor.execute(update_query, values)
+
+    db_close(conn, cursor)
+
+
+def add_education(username, school, degree, start, end):
+    conn, cursor = db_connect()
+
+    update_query = "INSERT INTO tblEducation (Title, Description, Employer, Location, Salary, CreatedBy, DateStarted," \
+                   " DateEnded) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+    values = (username,)
+    cursor.execute(update_query, values)
+
+    db_close(conn, cursor)
+
+
+def get_education(username):
+    conn, cursor = db_connect()
+
+    update_query = f"SELECT * FROM tblEducation WHERE Username = ?"
+    values = (username,)
+    cursor.execute(update_query, values)
+
+    education = cursor.fetchone()
+
+    db_close(conn, cursor)
+
+    return education
+
+
+def delete_education(username):
+    conn, cursor = db_connect()
+
+    delete_query = "DELETE FROM tblEducation WHERE username = ?"
+    values = (username,)
+    cursor.execute(delete_query, values)
+
+    db_close(conn, cursor)
 
 
