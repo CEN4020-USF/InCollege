@@ -121,7 +121,7 @@ def get_last_name(lastname):
 def get_by_university(university):
     conn, cursor = db_connect()
 
-    select_query = "SELECT Username FROM tblUsers WHERE University = ?"
+    select_query = "SELECT User FROM tblUserProfiles WHERE University = ?"
     values = (university,)
     cursor.execute(select_query, values)
 
@@ -135,7 +135,7 @@ def get_by_university(university):
 def get_by_major(major):
     conn, cursor = db_connect()
 
-    select_query = "SELECT Username FROM tblUsers WHERE Major = ?"
+    select_query = "SELECT User FROM tblUserProfiles WHERE Major = ?"
     values = (major,)
     cursor.execute(select_query, values)
 
