@@ -66,7 +66,8 @@ class ShowMyNetworkPage:
                 ["=" * column_width, "=" * column_width, "=" * column_width, "=" * column_width, "=" * column_width, ]]
         for user in users:
             user = db.get_user(user)
-            user_attributes = [user[0], user[2], user[3], user[10], user[9]]
+            profile = db.get_user_profile(user[0])
+            user_attributes = [user[0], user[2], user[3], profile[2], profile[1]]
             menu.append(user_attributes)
         for row in menu:
             print("{:<25} | {:<25} | {:<25} | {:<25} | {:<25}".format(*row))
@@ -85,7 +86,8 @@ class ShowMyNetworkPage:
                 ["=" * column_width, "=" * column_width, "=" * column_width, "=" * column_width, "=" * column_width, ]]
         for user in users:
             user = db.get_user(user)
-            user_attributes = [user[0], user[2], user[3], user[10], user[9]]
+            profile = db.get_user_profile(user[0])
+            user_attributes = [user[0], user[2], user[3], profile[2], profile[1]]
             menu.append(user_attributes)
         for row in menu:
             print("{:<25} | {:<25} | {:<25} | {:<25} | {:<25}".format(*row))
