@@ -2,7 +2,7 @@ from Pages import SkillsPage as Skills
 from Pages import LoginPage as login
 from Pages import ConnectionsPage as Connect
 from Pages import JobOpportunitiesPage as Job
-from Pages import ShowMyNetwork as Network
+from Pages import ShowMyNetwork as Network, UserProfilePage as Profile
 from Pages.Useful import BrowseInCollegePage as Browse, DirectoriesPage as Directory, GeneralPage as General, BusinessSolutionsPage as Business
 from Pages.InCollegeImportant import AccessibilityPage as Accessibility,\
     BrandPolicyPage as Brand, CopyrightPage as Copyright, \
@@ -18,6 +18,7 @@ class MainMenu:
         self.connect_page = Connect.ConnectionsPage()
         self.skills_page = Skills.SkillsPage()
         self.network = Network.ShowMyNetworkPage()
+        self.profile = Profile.UserProfilePage()
 
     def invalid_response(self, invalid_selection):
         print(f"{invalid_selection} is not a valid option. Please only enter the number")
@@ -37,7 +38,7 @@ class MainMenu:
             self.network.load_my_network()
             return True
         elif user_choice == 15:
-            self.profile.load_profiles()
+            self.profile.load_profile(login.username)
             return True
         elif user_choice == 16:
             return False

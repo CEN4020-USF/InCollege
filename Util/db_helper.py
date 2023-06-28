@@ -28,7 +28,7 @@ def add_user(username, password, first_name, last_name, email=1, sms=1, advert=1
     insert_query = \
         "INSERT INTO tblUsers (Username, Password, FirstName, LastName," \
         " EmailEnabled, SMSEnabled, AdvertisingEnabled, Language, SignedIn," \
-        " Friends, PendingFrom, PendingTo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        " Friends, PendingFrom, PendingTo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
     values = (username, password, first_name, last_name, email, sms, advert, lang,
               sign_in, friends, pending_from, pending_to)
     cursor.execute(insert_query, values)
@@ -73,7 +73,7 @@ def get_user(username):
 def check_name(firstname, last_name, is_mock=False):
     conn, cursor = db_connect()
 
-    select_query = "SELECT * FROM tblUsers WHERE first_name = ?"
+    select_query = "SELECT * FROM tblUsers WHERE FirstName = ?"
     values = (firstname,)
     cursor.execute(select_query, values)
 
@@ -93,7 +93,7 @@ def check_name(firstname, last_name, is_mock=False):
 def get_first_name(firstname):
     conn, cursor = db_connect()
 
-    select_query = "SELECT * FROM tblUsers WHERE first_name = ?"
+    select_query = "SELECT * FROM tblUsers WHERE FirstName = ?"
     values = (firstname,)
     cursor.execute(select_query, values)
 
@@ -107,7 +107,7 @@ def get_first_name(firstname):
 def get_last_name(lastname):
     conn, cursor = db_connect()
 
-    select_query = "SELECT Username FROM tblUsers WHERE last_name = ?"
+    select_query = "SELECT Username FROM tblUsers WHERE LastName = ?"
     values = (lastname,)
     cursor.execute(select_query, values)
 
@@ -466,10 +466,21 @@ def get_pending_from(username):
     db_close(conn, cursor)
     return friends_list
 
+
+def add_user_profile(username, title=None, major=None, uni=None, about=None, is_created=0):
+    conn, cursor = db_connect()
+
+    update_query = "INSERT INTO tblUserProfiles (Title, Major, University, About, IsCreated, User) VALUES (?, ?, ?, ?, ?, ?)"
+    values = (title, major, uni, about, is_created, username)
+    cursor.execute(update_query, values)
+
+    db_close(conn, cursor)
+
+
 def get_user_profile(username):
     conn, cursor = db_connect()
 
-    update_query = f"SELECT * FROM tblUserProfiles WHERE Username = ?"
+    update_query = f"SELECT * FROM tblUserProfiles WHERE User = ?"
     values = (username,)
     cursor.execute(update_query, values)
 

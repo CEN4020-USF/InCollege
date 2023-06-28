@@ -134,14 +134,15 @@ class Login:
                 first_name = input("First name: ")
                 last_name = input("Last name: ")
                 while True:
-                    check = db.check_name(first_name.lower(), last_name.lower())
+                    check = db.check_name(first_name.title(), last_name.title())
                     if check:
                         print("This person already exists in our system. Please make a new name.")
                         first_name = input("First name: ")
                         last_name = input("Last name: ")
                     else:
                         break
-                db.add_user(username, password, first_name.lower(), last_name.lower())
+                db.add_user(username, password, first_name.title(), last_name.title())
+                db.add_user_profile(username)
                 print(f"\nWelcome {username}! Sending you to the main menu navigation.\n")
                 db.user_signed_in(username)
                 break
@@ -169,7 +170,7 @@ class Login:
         if choice == 1:
             first_name = input("\nPlease enter their first name: ")
             last_name = input("Please enter their last name: ")
-            user = db.check_name(first_name.lower(), last_name.lower())
+            user = db.check_name(first_name.title(), last_name.title())
             if user:
                 print("\nThey are part of the InCollege system\n")
                 print("Would you like to join your friends on InCollege\n")
