@@ -159,7 +159,7 @@ def count_users():
     return count
 
 
-def add_job(title, description, employer, location, salary, created_by, date_started, date_ended):
+def add_job( created_by, title, description, employer, location, salary, date_started="", date_ended=""):
     conn, cursor = db_connect()
 
     # Execute a query to insert data into the table
@@ -194,15 +194,15 @@ def edit_job(job_id, company, position, salary):
 def get_job_by_user(created_by):
     conn, cursor = db_connect()
 
-    select_query = "SELECT * FROM tblJobs WHERE CreatedBy = ? LIMIT 3"
+    update_query = f"SELECT * FROM tblJobs WHERE Salary IS NULL AND CreatedBy = ? LIMIT 3"
     values = (created_by,)
-    cursor.execute(select_query, values)
+    cursor.execute(update_query, values)
 
-    job = [row[0] for row in cursor.fetchall()]
+    jobs = cursor.fetchall()
 
     db_close(conn, cursor)
 
-    return job
+    return jobs
 
 
 def count_jobs():
@@ -503,9 +503,8 @@ def set_user_profile(username, column, update):
 def add_education(username, school, degree, start, end):
     conn, cursor = db_connect()
 
-    update_query = "INSERT INTO tblEducation (Title, Description, Employer, Location, Salary, CreatedBy, DateStarted," \
-                   " DateEnded) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
-    values = (username,)
+    update_query = "INSERT INTO tblEducation (School, Degree, StartYear, EndYear, CreatedBy) VALUES (?, ?, ?, ?, ?)"
+    values = (school, degree, start, end, username)
     cursor.execute(update_query, values)
 
     db_close(conn, cursor)
@@ -514,11 +513,11 @@ def add_education(username, school, degree, start, end):
 def get_education(username):
     conn, cursor = db_connect()
 
-    update_query = f"SELECT * FROM tblEducation WHERE Username = ?"
+    update_query = f"SELECT * FROM tblEducation WHERE CreatedBy = ?"
     values = (username,)
     cursor.execute(update_query, values)
 
-    education = cursor.fetchone()
+    education = cursor.fetchall()
 
     db_close(conn, cursor)
 
@@ -528,7 +527,7 @@ def get_education(username):
 def delete_education(username):
     conn, cursor = db_connect()
 
-    delete_query = "DELETE FROM tblEducation WHERE username = ?"
+    delete_query = "DELETE FROM tblEducation WHERE CreatedBy = ?"
     values = (username,)
     cursor.execute(delete_query, values)
 

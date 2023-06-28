@@ -1,6 +1,7 @@
 # Import Section
 from Util import db_helper as db
 from Pages import LoginPage as login
+from Pages import JobOpportunitiesPage as jobs
 
 
 class UserProfilePage:
@@ -46,6 +47,8 @@ class UserProfilePage:
         print("2.) Major")
         print("3.) University")
         print("4.) About")
+        print("5.) Add Professional Experience")
+        print("6.) Add Education")
         print("0.) Save Changes and Return")
         choice = input("Enter Choice: ")
 
@@ -64,6 +67,22 @@ class UserProfilePage:
         elif choice == "4":
             about = input("Tell us About Yourself: ")
             db.set_user_profile(user, "About", about)
+            self.edit(user)
+        elif choice == "5":
+            title = input("What is the title of the job? ")
+            description = input("Give a description of the job ")
+            employer = input("Who is the employer of the job? ")
+            location = input("Where is the location of the job? ")
+            start = input("When did you start working here? ")
+            end = input("When did you stop working here? ")
+            db.add_job(login.username, title, description, employer, location, None, start, end)
+            self.edit(user)
+        elif choice == "6":
+            school = input("Name of School: ").title()
+            degree = input("Degree: ").title()
+            start = input("Start Year: ")
+            end = input("End Year: ")
+            db.add_education(user, school, degree, start, end)
             self.edit(user)
         elif choice == "0":
             user_check = db.get_user_profile(user)
@@ -117,8 +136,39 @@ class UserProfilePage:
             self.view_friends(user)
         return
 
-    def print_jobs(self, user):
-        return
+    @staticmethod
+    def print_jobs(user):
+        column_width = 35
+        jobs = db.get_job_by_user(user)
+        if jobs is None or len(jobs) == 0:
+            print("There is no relevant professional experience yet.")
+            return
 
-    def print_education(self, user):
-        return
+        print("\nProfessional Experience: ")
+        menu = [["Title", "Employer", "Date Started", "Date Ended", "Location", "Description"],
+                ["=" * column_width, "=" * column_width, "=" * column_width, "=" * column_width, "=" * column_width, "=" * column_width]]
+        for job in jobs:
+            job_attributes = [job[0], job[2], job[6], job[7], job[3], job[1]]
+            menu.append(job_attributes)
+        for row in menu:
+            print("{:<35} | {:<35} | {:<35} | {:<35} | {:<35} | {:<35}".format(*row))
+        print("\n")
+
+    @staticmethod
+    def print_education(user):
+        column_width = 35
+        education = db.get_education(user)
+        if education is None or len(education) == 0:
+            print("There is no relevant education experience yet")
+            return
+
+        print("\nEducation: ")
+        menu = [["School", "Degree", "Start Year", "End Year"],
+                ["=" * column_width, "=" * column_width, "=" * column_width, "=" * column_width]]
+        for school in education:
+            education_attributes = [school[0], school[1], school[2], school[3]]
+            menu.append(education_attributes)
+        for row in menu:
+            print("{:<35} | {:<35} | {:<35} | {:<35}".format(*row))
+        print("\n")
+
