@@ -493,8 +493,8 @@ def get_user_profile(username):
 def set_user_profile(username, column, update):
     conn, cursor = db_connect()
 
-    update_query = f"UPDATE tblUserProfiles SET {column} = {update} WHERE Username = ?"
-    values = (username,)
+    update_query = f"UPDATE tblUserProfiles SET {column} = ? WHERE User = ?"
+    values = (update, username,)
     cursor.execute(update_query, values)
 
     db_close(conn, cursor)
