@@ -2,7 +2,7 @@ from Pages import SkillsPage as Skills
 from Pages import LoginPage as login
 from Pages import ConnectionsPage as Connect
 from Pages import JobOpportunitiesPage as Job
-from Pages import ShowMyNetwork as Network, UserProfilePage as Profile
+from Pages import ShowMyNetwork as Network
 from Pages.Useful import BrowseInCollegePage as Browse, DirectoriesPage as Directory, GeneralPage as General, BusinessSolutionsPage as Business
 from Pages.InCollegeImportant import AccessibilityPage as Accessibility,\
     BrandPolicyPage as Brand, CopyrightPage as Copyright, \
@@ -18,7 +18,6 @@ class MainMenu:
         self.connect_page = Connect.ConnectionsPage()
         self.skills_page = Skills.SkillsPage()
         self.network = Network.ShowMyNetworkPage()
-        self.profile = Profile.UserProfilePage()
 
     def invalid_response(self, invalid_selection):
         print(f"{invalid_selection} is not a valid option. Please only enter the number")
@@ -38,9 +37,6 @@ class MainMenu:
             self.network.load_my_network()
             return True
         elif user_choice == 15:
-            self.profile.load_profile(login.username)
-            return True
-        elif user_choice == 16:
             return False
         elif user_choice == 21:
             General.GeneralPage().menu()
@@ -92,7 +88,7 @@ class MainMenu:
             self.print_menu()
             choice = int(input("\nPlease enter where you would like to navigate: "))
             is_exit = self.selected_menu_option(choice)
-            if (choice == 16):
+            if (choice == 15):
                 return self.exit()
         
     @staticmethod
@@ -115,8 +111,8 @@ class MainMenu:
                 ["12.) Your Connections", "22.) Browse InCollege", "32.) About"],
                 ["13.) Job/Internship Prospects", "23.) Business Solutions", "33.) Accessibility"],
                 ["14.) Show My Network", "24.) Directories", "34.) User Agreement"],
-                ["15.) Show Profiles", "", "35.) Cookie Policy"],
-                ["16.) Exit", "", "36.) Copyright Policy"],
+                ["15.) Exit", "", "35.) Cookie Policy"],
+                ["", "", "36.) Copyright Policy"],
                 ["", "", "37.) Brand Policy"],
                 ["", "", "38.) Privacy Policy"],
                 ["", "", "39.) Language Settings"], ]
