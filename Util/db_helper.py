@@ -467,7 +467,7 @@ def get_pending_from(username):
     return friends_list
 
 
-def add_user_profile(username, title=None, major=None, uni=None, about=None, is_created=0):
+def add_user_profile(username, title="", major="", uni="", about="", is_created=0):
     conn, cursor = db_connect()
 
     update_query = "INSERT INTO tblUserProfiles (Title, Major, University, About, IsCreated, User) VALUES (?, ?, ?, ?, ?, ?)"
@@ -481,6 +481,7 @@ def get_user_profile(username):
     conn, cursor = db_connect()
 
     update_query = f"SELECT * FROM tblUserProfiles WHERE User = ?"
+
     values = (username,)
     cursor.execute(update_query, values)
 
