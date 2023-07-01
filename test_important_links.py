@@ -130,7 +130,7 @@ class TestUsefulLinks:
         assert "* Language *" in captured.out
 
     def test_navigation_language_change_english(self, monkeypatch, capsys, mocker):
-        inputs = [39, 1, 15, 15]
+        inputs = [39, 1, 16, 16]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
@@ -146,7 +146,7 @@ class TestUsefulLinks:
         assert "Your language has been set to English!" in captured.out
 
     def test_navigation_language_change_spanish(self, monkeypatch, capsys, mocker):
-        inputs = [39, 2, 15, 15]
+        inputs = [39, 2, 16, 16]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
