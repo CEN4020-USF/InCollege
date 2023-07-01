@@ -70,7 +70,7 @@ class TestConnections:
         assert "You can not friend yourself. Try Again." in captured.out
 
     def test_sent_request_already_friend(self, monkeypatch, capsys, mocker):
-        inputs = ["11", "blanders1", "Forgaming1!", "12", "4", "test", "4", "test", "0", 16]
+        inputs = ["11", "rmalloy1", "Password1!", "12", "4", "test", "4", "test", "0", 16]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         user = ["benjamin", "landers"]
@@ -100,7 +100,7 @@ class TestConnections:
         inputs = ["11", "test", "Password1!", "n", 16]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
-        user =["jimmy"]
+        user =["rmalloy1"]
         with mocker.patch.object(db, "get_pending_from", return_value=user):
             self.login.menu()
 
@@ -113,12 +113,9 @@ class TestConnections:
         inputs = ["11", "test", "Password1!", "y", 16]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
-        user_from =["jimmy"]
-        user_to = ["test"]
+        user_from =["rmalloy1"]
         with mocker.patch.object(db, "get_pending_from", return_value=user_from):
-            with mocker.patch.object(db, "get_pending_to", return_value=user_to):
-                with mocker.patch.object(db, "get_friends", return_value=None):
-                    self.login.menu()
+            self.login.menu()
         
 
         captured = capsys.readouterr()
@@ -130,12 +127,9 @@ class TestConnections:
         inputs = ["11", "test", "Password1!", "jank", 16]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
-        user_from =["jimmy"]
-        user_to = ["test"]
+        user_from =["rmalloy1"]
         with mocker.patch.object(db, "get_pending_from", return_value=user_from):
-            with mocker.patch.object(db, "get_pending_to", return_value=user_to):
-                with mocker.patch.object(db, "get_friends", return_value=None):
-                    self.login.menu()
+            self.login.menu()
         
 
         captured = capsys.readouterr()
@@ -144,11 +138,11 @@ class TestConnections:
         assert "Please select a valid option (Only enter a Y or N)" in captured.out
 
     def test_check_pending_requests(self, monkeypatch, capsys, mocker):
-        inputs = ["11", "test", "Password1!", "12", "4", 'jimmy', "0", "14", "1", "0", 16]
+        inputs = ["11", "test", "Password1!", "14", "1", "0", 16]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
-        user = ["benjamin", "landers"]
-        with mocker.patch.object(db, 'check_name', return_value=user):
+        user_to =["rmalloy1"]
+        with mocker.patch.object(db, "get_pending_to", return_value=user_to):
             self.login.menu()
     
         captured = capsys.readouterr()
@@ -198,9 +192,8 @@ class TestConnections:
         inputs = ["11", "test", "Password1!", "12", "3", "LoserDegree", "0", 16]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
-        user = ["test", "Password1!"]
-        with mocker.patch.object(db, 'is_user_signed_in', return_value=user):
-            self.login.menu()
+        with mocker.patch.object(db, 'check_name', return_value=None):
+            self.connections.load_connections()
         # Capture the output
         captured = capsys.readouterr()
 

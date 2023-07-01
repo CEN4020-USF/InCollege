@@ -38,10 +38,10 @@ class TestShowNetwork:
         assert "You currently have no connections" in captured.out
 
     def test_delete_friends(self, monkeypatch, capsys, mocker):
-        inputs = ["11", "test", "Password1!", "14", "2","jimmy", "0", 16]
+        inputs = ["11", "test", "Password1!", "14", "2","rmalloy1", "0", 16]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
-        user = ["jimmy"]
+        user = ["rmalloy1"]
         with mocker.patch.object(db, 'get_friends', return_value=user):
             self.login.menu()
 

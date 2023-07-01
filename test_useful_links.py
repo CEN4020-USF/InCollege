@@ -19,7 +19,7 @@ class TestUsefulLinks:
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
-        user = ["john", "Password123"]
+        user = ["john", "n", "Password123"]
         with mocker.patch.object(db, 'get_user', return_value=user):
             self.menu.main_menu_options()
 
@@ -32,7 +32,7 @@ class TestUsefulLinks:
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
-        user = ["john", "Password123"]
+        user = ["john", "n", "Password123"]
         with mocker.patch.object(db, 'get_user', return_value=user):
             self.menu.main_menu_options()
 
@@ -45,7 +45,7 @@ class TestUsefulLinks:
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
-        user = ["john", "Password123"]
+        user = ["john", "n", "Password123"]
         with mocker.patch.object(db, 'get_user', return_value=user):
             self.menu.main_menu_options()
 
@@ -58,7 +58,7 @@ class TestUsefulLinks:
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
-        user = ["john", "Password123"]
+        user = ["john", "n", "Password123"]
         with mocker.patch.object(db, 'is_user_signed_in', return_value=True):
             with mocker.patch.object(db, 'get_user', return_value=user):
                 self.menu.main_menu_options()
@@ -72,7 +72,7 @@ class TestUsefulLinks:
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
-        user = ["john", "Password123"]
+        user = ["john", "n", "Password123"]
         with mocker.patch.object(db, 'get_user', return_value=user):
             self.menu.main_menu_options()
 
@@ -85,7 +85,7 @@ class TestUsefulLinks:
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
-        user = ["john", "Password123"]
+        user = ["john", "n", "Password123"]
         with mocker.patch.object(db, 'get_user', return_value=user):
             self.menu.main_menu_options()
 
@@ -98,7 +98,7 @@ class TestUsefulLinks:
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
-        user = ["john", "Password123"]
+        user = ["john", "n", "Password123"]
         with mocker.patch.object(db, 'get_user', return_value=user):
             self.menu.main_menu_options()
 
@@ -111,7 +111,7 @@ class TestUsefulLinks:
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
-        user = ["john", "Password123"]
+        user = ["john", "n", "Password123"]
         with mocker.patch.object(db, 'get_user', return_value=user):
             self.menu.main_menu_options()
 
@@ -124,7 +124,7 @@ class TestUsefulLinks:
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
-        user = ["john", "Password123"]
+        user = ["john", "n", "Password123"]
         with mocker.patch.object(db, 'get_user', return_value=user):
             self.menu.main_menu_options()
 
@@ -137,7 +137,7 @@ class TestUsefulLinks:
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
-        user = ["john", "Password123"]
+        user = ["john", "n", "Password123"]
         with mocker.patch.object(db, 'get_user', return_value=user):
             self.menu.main_menu_options()
 
