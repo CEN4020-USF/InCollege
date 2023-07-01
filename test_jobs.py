@@ -16,7 +16,7 @@ class TestJob:
 
     def test_post_job(self, monkeypatch, capsys, mocker):
         # Mocking input to simulate user interaction
-        inputs = ["johnnytest", "Password1!", "13", "1", "Test Title", "Test Desc", "Test Employer", "Test Location", "12345", "9", "15", "15"]
+        inputs = ["johnnytest", "Password1!", "13", "1", "Test Title", "Test Desc", "Test Employer", "Test Location", "12345", "9", "16", "16"]
 
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
         # Mocking the get_user method to return a user with matching credentials
@@ -45,7 +45,7 @@ class TestJob:
         assert "Number of jobs permitted exceeded, going back to main menu" in captured.out
 
     def test_job_page_returns_to_menu(self, monkeypatch, capsys, mocker):
-        inputs = ["9", "15"]
+        inputs = ["9", "16"]
 
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
