@@ -8,12 +8,12 @@ class PrivacyPolicyPage:
         print("\n* Privacy Policy Page *\n")
         print("1.) Guest Policy Controls")
         print("0.) Return")
-        choice = int(input("Enter Choice: "))
+        choice = input("Enter Choice: ")
 
-        if choice == 1:
+        if choice == "1":
             self.guest_controls_menu()
             self.menu()
-        elif choice == 0:
+        elif choice == "0":
             return
         else:
             print(f"{choice} is not a supported option. Please try again")
@@ -34,24 +34,24 @@ class PrivacyPolicyPage:
         print(f"3.) Press to Toggle Targeted Advertising\t Current: {advertising}")
         print("4.) Return")
         print("1 = ON\t0 = OFF")
-        choice = int(input("Enter Choice: "))
+        choice = input("Enter Choice: ")
 
-        if choice == 1:
+        if choice == "1":
             email = self.toggler(email)
             db.toggle_email(login.username, email)
             print("Email Notifications Updated")
             self.guest_controls_menu()
-        elif choice == 2:
+        elif choice == "2":
             sms = self.toggler(sms)
             db.toggle_sms(login.username, sms)
             print("SMS Notifications Updated")
             self.guest_controls_menu()
-        elif choice == 3:
+        elif choice == "3":
             advertising = self.toggler(advertising)
             db.toggle_advertising(login.username, advertising)
             print("Targeted Advertising Updated")
             self.guest_controls_menu()
-        elif choice == 4:
+        elif choice == "4":
             return
         else:
             print(f"{choice} is not a supported option. Please try again")

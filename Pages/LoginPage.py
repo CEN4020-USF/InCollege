@@ -24,55 +24,55 @@ class Login:
         print("# soon as they graduate.\"                                                                          #")
         print("#"*100)
         self.print_menu()
-        option = int(input("Enter Option: "))
-        if option == 11:
+        option = input("Enter Option: ")
+        if option == "11":
             self.sign_in()
-        elif option == 12:
+        elif option == "12":
             self.create_account()
-        elif option == 13:
+        elif option == "13":
             self.search()
-        elif option == 14:
+        elif option == "14":
             self.play_video()
-        elif option == 15:
+        elif option == "15":
             Menu.MainMenu().exit()
 
-        elif option == 21:
+        elif option == "21":
             General.GeneralPage().menu()
-        elif option == 22:
+        elif option == "22":
             Browse.BrowseInCollegePage().menu()
             self.menu()
-        elif option == 23:
+        elif option == "23":
             Business.BusinessSolutionsPage().menu()
             self.menu()
-        elif option == 24:
+        elif option == "24":
 
             Directory.DirectoriesPage().menu()
             self.menu()
-        elif option == 31:
+        elif option == "31":
             Copyright.CopyrightPage().menu()
             self.menu()
-        elif option == 32:
+        elif option == "32":
             About.AboutPage().menu()
             self.menu()
-        elif option == 33:
+        elif option == "33":
             Accessibility.AccessibilityPage().menu()
             self.menu()
-        elif option == 34:
+        elif option == "34":
             UserAgreement.UserAgreementPage().menu()
             self.menu()
-        elif option == 35:
+        elif option == "35":
             Cookie.CookiePolicyPage().menu()
             self.menu()
-        elif option == 36:
+        elif option == "36":
             CopyPolicy.CopyrightPolicyPage().menu()
             self.menu()
-        elif option == 37:
+        elif option == "37":
             Brand.BrandPolicyPage().menu()
             self.menu()
-        elif option == 38:
+        elif option == "38":
             Privacy.PrivacyPolicyPage().menu()
             self.menu()
-        elif option == 39:
+        elif option == "39":
             Lang.LanguagePage().menu()
             self.menu()
         else:
@@ -160,14 +160,14 @@ class Login:
         print("1.) Yes ")
         print("2.) No return to previous")
 
-        choice = int(input("Please enter 1 or 2: "))
+        choice = input("Please enter 1 or 2: ")
         while True:
-                if choice != 1 and choice !=2:
-                    choice = int(input("Invalid input please enter 1 or 2: "))
+                if choice != "1" and choice != "2":
+                    choice = input("Invalid input please enter 1 or 2: ")
                 else:
                     break
         
-        if choice == 1:
+        if choice == "1":
             first_name = input("\nPlease enter their first name: ")
             last_name = input("Please enter their last name: ")
             user = db.check_name(first_name.title(), last_name.title())
@@ -176,37 +176,37 @@ class Login:
                 print("Would you like to join your friends on InCollege\n")
                 print("1.) Yes I would like to login or sign up")
                 print("2.) No Return to previous page")
-                opt = int(input("Please enter 1 or 2: "))
+                opt = input("Please enter 1 or 2: ")
                 while True:
-                        if opt != 1 and opt !=2:
-                            opt = int(input("Invalid input please enter 1 or 2: "))
+                        if opt != "1" and opt != "2":
+                            opt = input("Invalid input please enter 1 or 2: ")
                         else:
                             break
-                if opt == 1:
+                if opt == "1":
                     print("1.) Sign In")
                     print("2.) Create Account")
                     print("3.) Return to previous page")
-                    option = int(input("Enter option: "))
+                    option = input("Enter option: ")
                     while True:
-                        if option != 1 and option !=2 and option != 3:
-                            option = int(input("Invalid input please enter 1, 2, or 3: "))
+                        if option != "1" and option != "2" and option != "3":
+                            option = input("Invalid input please enter 1, 2, or 3: ")
                         else:
                             break
-                    if option == 1:
+                    if option == "1":
                         self.sign_in()
-                    elif option == 2:
+                    elif option == "2":
                         self.create_account()
-                    elif option == 3:
+                    elif option == "3":
                         self.search()
 
                     
-                elif opt == 2:
+                elif opt == "2":
                     return self.search()
             else:
                 print("\nThey are not yet a part of the InCollege system yet\n")
                 return self.search()
         
-        elif choice == 2:
+        elif choice == "2":
             return self.menu()
 
     def print_menu(self):

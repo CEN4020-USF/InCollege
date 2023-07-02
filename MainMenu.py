@@ -25,60 +25,60 @@ class MainMenu:
         print("next to the option you would like to navigate to.")
 
     def selected_menu_option(self, user_choice):
-        if user_choice == 11:
+        if user_choice == "11":
             self.skills_page.select_skill()
             return True
-        elif user_choice == 12:
+        elif user_choice == "12":
             self.connect_page.load_connections()
             return True
-        elif user_choice == 13:
+        elif user_choice == "13":
             self.job_page.load_job_opportunities()
             return True
-        elif user_choice == 14:
+        elif user_choice == "14":
             self.network.load_my_network()
             return True
-        elif user_choice == 15:
+        elif user_choice == "15":
             self.profile.load_profile(login.username)
             return True
-        elif user_choice == 16:
+        elif user_choice == "16":
             return False
-        elif user_choice == 21:
+        elif user_choice == "21":
             General.GeneralPage().menu()
             return True
-        elif user_choice == 22:
+        elif user_choice == "22":
             Browse.BrowseInCollegePage().menu()
             return True
-        elif user_choice == 23:
+        elif user_choice == "23":
             Business.BusinessSolutionsPage().menu()
             return True
-        elif user_choice == 24:
+        elif user_choice == "24":
             Directory.DirectoriesPage().menu()
             return True
-        elif user_choice == 31:
+        elif user_choice == "31":
             Copyright.CopyrightPage().menu()
             return True
-        elif user_choice == 32:
+        elif user_choice == "32":
             About.AboutPage().menu()
             return True
-        elif user_choice == 33:
+        elif user_choice == "33":
             Accessibility.AccessibilityPage().menu()
             return True
-        elif user_choice == 34:
+        elif user_choice == "34":
             UserAgreement.UserAgreementPage().menu()
             return True
-        elif user_choice == 35:
+        elif user_choice == "35":
             Cookie.CookiePolicyPage().menu()
             return True
-        elif user_choice == 36:
+        elif user_choice == "36":
             CopyPolicy.CopyrightPolicyPage().menu()
             return True
-        elif user_choice == 37:
+        elif user_choice == "37":
             Brand.BrandPolicyPage().menu()
             return True
-        elif user_choice == 38:
+        elif user_choice == "38":
             Privacy.PrivacyPolicyPage().menu()
             return True
-        elif user_choice == 39:
+        elif user_choice == "39":
             Lang.LanguagePage().menu()
             return True
         else:
@@ -90,7 +90,7 @@ class MainMenu:
             self.pending_friends_prompt()
         while True:
             self.print_menu()
-            choice = int(input("\nPlease enter where you would like to navigate: "))
+            choice = input("\nPlease enter where you would like to navigate: ")
             is_exit = self.selected_menu_option(choice)
             if (choice == 16):
                 return self.exit()

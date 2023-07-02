@@ -15,11 +15,11 @@ class AccessibilityPage:
         print("#"*70)
         print()
 
-        choice = int(input("0.) Return to previous "))
+        choice = input("0.) Return to previous ")
         while True:
-            if choice != 0:
-                choice = int(input("\nInvalid input please select number next to navigation link: "))
+            if choice != "0":
+                choice = input("\nInvalid input please select number next to navigation link: ")
             else:
                 break
-        if choice == 0:
+        if choice == "0":
             return

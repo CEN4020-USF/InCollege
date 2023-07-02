@@ -36,7 +36,7 @@ class ConnectionsPage:
     def find_users_by_last_name(self):
         last_name = input("Please Enter Last Name: ")
         users = db.get_last_name(last_name.title())
-        if len(users) == 0:
+        if len(users) == 0 or users is None:
             print(f"There were no users found with the last name, {last_name}")
             return
         self.print_users(users)
@@ -45,7 +45,7 @@ class ConnectionsPage:
     def find_users_by_major(self):
         major = input("Please Enter Major: ")
         users = db.get_by_major(major.title())
-        if len(users) == 0:
+        if len(users) == 0 or users is None:
             print(f"There were no users found majoring in {major}")
             return
         self.print_users(users)
@@ -54,7 +54,7 @@ class ConnectionsPage:
     def find_users_by_university(self):
         university = input("Please Enter University: ")
         users = db.get_by_university(university.title())
-        if len(users) == 0:
+        if len(users) == 0 or users is None:
             print(f"There were no users found at {university}")
             return
         self.print_users(users)
