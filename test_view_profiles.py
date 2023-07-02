@@ -61,3 +61,27 @@ class Testprofile:
 
         # Validate the output
         assert "* Robert Malloy's User Profile *" in captured.out
+
+    def test_Invalid_Input_Profile(self, monkeypatch, capsys, mocker):
+        inputs = ["11", "rmalloy1", "Password1!", "15", "blank","0", "16"]
+        monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+
+        with mocker.patch.object(db, 'check_name', return_value=None):
+            self.login.menu()   
+        # Capture the output
+        captured = capsys.readouterr()
+
+        # Validate the output
+        assert "is not a valid response" in captured.out
+
+    def test_Invalid_Input_Friends(self, monkeypatch, capsys, mocker):
+        inputs = ["11", "rmalloy1", "Password1!", "15", "2", "blank","0", "0", "16"]
+        monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
+
+        with mocker.patch.object(db, 'check_name', return_value=None):
+            self.login.menu()   
+        # Capture the output
+        captured = capsys.readouterr()
+
+        # Validate the output
+        assert "is not a valid choice" in captured.out
