@@ -27,7 +27,7 @@ class Testprofile:
         assert "* Robert Malloy's User Profile *" in captured.out
 
     def test_User_No_Profile(self, monkeypatch, capsys, mocker):
-        inputs = ["11", "test_user", "Password1!", "15", "0", "16"]
+        inputs = ["11", "test", "Password1!", "15", "0", "16"]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         with mocker.patch.object(db, 'check_name', return_value=None):
@@ -51,7 +51,7 @@ class Testprofile:
         assert "Looks like the user you are trying to connect to either: 1.) Is not a friend or 2.) Does not have a profile set up" in captured.out
     
     def test_Friend_Has_Profile(self, monkeypatch, capsys, mocker):
-        inputs = ["11", "test_user", "Password1!", "15", "2", "1", "rmalloy1", "0", "0", "0", "16"]
+        inputs = ["11", "test", "Password1!", "15", "2", "1", "rmalloy1", "0", "0", "0", "16"]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         with mocker.patch.object(db, 'check_name', return_value=None):
