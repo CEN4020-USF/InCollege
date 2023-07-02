@@ -13,7 +13,7 @@ class TestUsefulLinks:
         self.login = LoginPage.Login()
 
     def test_navigation_copyright_notice(self, monkeypatch, capsys, mocker):
-        inputs = [31, 0, 15]
+        inputs = ['31', '0', '15']
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
@@ -26,7 +26,7 @@ class TestUsefulLinks:
         assert "Team New Mexico" in captured.out
 
     def test_navigation_about(self, monkeypatch, capsys, mocker):
-        inputs = [32, 0, 15]
+        inputs = ['32', '0', '15']
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
@@ -39,7 +39,7 @@ class TestUsefulLinks:
         assert "InCollege is designed to be an alternative" in captured.out
 
     def test_navigation_accessibility(self, monkeypatch, capsys, mocker):
-        inputs = [33, 0, 15]
+        inputs = ['33', '0', '15']
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
@@ -52,7 +52,7 @@ class TestUsefulLinks:
         assert "Accessibility Statement" in captured.out
 
     def test_navigation_user_agreement(self, monkeypatch, capsys, mocker):
-        inputs = [34, 0, 15]
+        inputs = ['34', '0', '15']
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
@@ -65,7 +65,7 @@ class TestUsefulLinks:
         assert "User Agreement:" in captured.out
 
     def test_navigation_cookie_policy(self, monkeypatch, capsys, mocker):
-        inputs = [35, 0, 15]
+        inputs = ['35', '0', '15']
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
@@ -78,7 +78,7 @@ class TestUsefulLinks:
         assert "Our site uses essential cookies" in captured.out
 
     def test_navigation_copyright_policy(self, monkeypatch, capsys, mocker):
-        inputs = [36, 0, 15]
+        inputs = ['36', '0', '15']
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
@@ -91,7 +91,7 @@ class TestUsefulLinks:
         assert "Copyright Policy:" in captured.out
 
     def test_navigation_brand_policy(self, monkeypatch, capsys, mocker):
-        inputs = [37, 0, 15]
+        inputs = ['37', '0', '15']
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
@@ -104,7 +104,7 @@ class TestUsefulLinks:
         assert "**InCollege Brand Usage Guidelines**" in captured.out
 
     def test_navigation_language_not_logged_in(self, monkeypatch, capsys, mocker):
-        inputs = [39, 15]
+        inputs = ['39', '15']
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
@@ -116,21 +116,21 @@ class TestUsefulLinks:
         captured = capsys.readouterr()
         assert "Please login before trying to edit language settings" in captured.out
 
-    def test_navigation_language_logged_in(self, monkeypatch, capsys, mocker):
-        inputs = [39, 0, 15]
+    def test_navigation_language_loggin_in(self, monkeypatch, capsys, mocker):
+        inputs = ["11", "test", "Password1!", "39", "0", '16']
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
-        # Mocking the get_user method to return a user with matching credentials
-        user = ["john", "Password123"]
-        with mocker.patch.object(db, 'is_user_signed_in', return_value=True):
+        info = ["blanders1", "title" "Computer Engineer"]
+        with mocker.patch.object(db, 'set_user_profile', return_value=info):
             self.login.menu()
-
-        # Capturing printed output and asserting expected result
+        # Capture the output
         captured = capsys.readouterr()
+
+        # Validate the output
         assert "* Language *" in captured.out
 
     def test_navigation_language_change_english(self, monkeypatch, capsys, mocker):
-        inputs = [39, 1, 16, 16]
+        inputs = ['39', '1', '16', 16]
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
@@ -146,7 +146,7 @@ class TestUsefulLinks:
         assert "Your language has been set to English!" in captured.out
 
     def test_navigation_language_change_spanish(self, monkeypatch, capsys, mocker):
-        inputs = [39, 2, 16, 16]
+        inputs = ['39', '2', '16', '16']
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         # Mocking the get_user method to return a user with matching credentials
@@ -163,7 +163,7 @@ class TestUsefulLinks:
 
 
     def test_navigation_privacy_policy_not_logged_in(self, monkeypatch, capsys, mocker):
-        inputs = [38, 1, 0, 15]
+        inputs = ['38', '1', '0', '15']
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         with mocker.patch.object(db, 'is_user_signed_in', return_value=False):
@@ -174,7 +174,7 @@ class TestUsefulLinks:
         assert "Please sign in to edit settings" in captured.out
 
     def test_navigation_privacy_policy_logged_in(self, monkeypatch, capsys, mocker):
-        inputs = [38, 1, 4, 0, 15]
+        inputs = ['38', '1', '4', '0', '15']
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         user = ["test", "Password123", "first", "last", "1", "1", "1", "English"]
@@ -187,7 +187,7 @@ class TestUsefulLinks:
         assert "* Guest Controls Page *" in captured.out
 
     def test_navigation_privacy_policy_toggle_email(self, monkeypatch, capsys, mocker):
-        inputs = [38, 1, 1, 4, 0, 15]
+        inputs = ['38', '1', '1', '4', '0', '15']
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         user = ["test", "Password123", "first", "last", "1", "1", "1", "English"]
@@ -201,7 +201,7 @@ class TestUsefulLinks:
         assert "Email Notifications Updated" in captured.out
 
     def test_navigation_privacy_policy_toggle_sms(self, monkeypatch, capsys, mocker):
-        inputs = [38, 1, 2, 4, 0, 15]
+        inputs = ['38', '1', '2', '4', '0', '15']
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         user = ["test", "Password123", "first", "last", "1", "1", "1", "English"]
@@ -215,7 +215,7 @@ class TestUsefulLinks:
         assert "SMS Notifications Updated" in captured.out
 
     def test_navigation_privacy_policy_toggle_advertising(self, monkeypatch, capsys, mocker):
-        inputs = [38, 1, 3, 4, 0, 15]
+        inputs = ['38', '1', '3', '4', '0', '15']
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         user = ["test", "Password123", "first", "last", "1", "1", "1", "English"]
