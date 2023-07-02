@@ -7,22 +7,26 @@ class LanguagePage:
 
     def menu(self):
         #if login.username == "":
-        if db.is_user_signed_in() == False:
+        if not db.is_user_signed_in():
             print("\nPlease login before trying to edit language settings\n")
             return
 
         print("\n* Language *\n")
+        print(f"Current Language: {db.get_user(login.username)[7]}\n")
         print("Set Language:")
         print("1.) English")
         print("2.) Spanish")
         print("0.) Return")
-        choice = int(input("Enter Choice: "))
+        choice = input("Enter Choice: ")
 
-        if choice == 1:
+        if choice == "1":
             db.change_language(db.get_user(login.username)[0], "English")
             print("Your language has been set to English!")
-        elif choice == 2:
+        elif choice == "2":
             db.change_language(db.get_user(login.username)[0], "Spanish")
             print("Your language has been set to Spanish!")
-        elif choice == 0:
+        elif choice == "0":
             return
+        else:
+            print(f"{choice} is not valid. Please try again.")
+            self.menu()

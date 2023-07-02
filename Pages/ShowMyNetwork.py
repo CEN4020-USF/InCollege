@@ -42,7 +42,7 @@ class ShowMyNetworkPage:
             return
         deleted_friend = db.get_user(deleted_friend)
         db.delete_friend(login.username, deleted_friend)
-        print(f"We have removed {deleted_friend} from your friends list!")
+        print(f"We have removed {deleted_friend[0]} from your friends list!")
         return
 
     def delete_pending(self):
@@ -52,25 +52,25 @@ class ShowMyNetworkPage:
             print(f"You did not have a pending friend request to {delete_friend}")
             return
         delete_friend = db.get_user(delete_friend)
+        print(f"We have removed {delete_friend[0]} from your pending friends list!")
         db.delete_pending(login.username, delete_friend)
 
     @staticmethod
     def print_friends(users):
         column_width = 25
         print("\n")
-        if len(users) == 0:
+        if len(users) == 0 or None:
             print("You currently have no connections")
             return
         print("Your Friends")
-        menu = [["Username", "First Name", "Last Name", "University", "Major"],
-                ["=" * column_width, "=" * column_width, "=" * column_width, "=" * column_width, "=" * column_width, ]]
+        menu = [["Username", "First Name", "Last Name"],
+                ["=" * column_width, "=" * column_width, "=" * column_width, ]]
         for user in users:
             user = db.get_user(user)
-            profile = db.get_user_profile(user[0])
-            user_attributes = [user[0], user[2], user[3], profile[2], profile[1]]
+            user_attributes = [user[0], user[2], user[3]]
             menu.append(user_attributes)
         for row in menu:
-            print("{:<25} | {:<25} | {:<25} | {:<25} | {:<25}".format(*row))
+            print("{:<25} | {:<25} | {:<25}".format(*row))
         print("\n")
         return
 
@@ -78,18 +78,17 @@ class ShowMyNetworkPage:
     def print_pending(users):
         column_width = 25
         print("\n")
-        if len(users) == 0:
+        if len(users) == 0 or None:
             print("You currently have no pending friend requests")
             return
         print("Your Pending Friend Requests")
-        menu = [["Username", "First Name", "Last Name", "University", "Major"],
-                ["=" * column_width, "=" * column_width, "=" * column_width, "=" * column_width, "=" * column_width, ]]
+        menu = [["Username", "First Name", "Last Name"],
+                ["=" * column_width, "=" * column_width, "=" * column_width, ]]
         for user in users:
             user = db.get_user(user)
-            profile = db.get_user_profile(user[0])
-            user_attributes = [user[0], user[2], user[3], profile[2], profile[1]]
+            user_attributes = [user[0], user[2], user[3]]
             menu.append(user_attributes)
         for row in menu:
-            print("{:<25} | {:<25} | {:<25} | {:<25} | {:<25}".format(*row))
+            print("{:<25} | {:<25} | {:<25}".format(*row))
         print("\n")
         return

@@ -97,14 +97,14 @@ class UserProfilePage:
         column_width = 25
         friends = db.get_friends(user)
 
-        if len(friends) == 0:
+        if len(friends) == 0 or None:
             print("\nCurrently, you have no friends")
             return
 
         print("\n")
         print("Your Friends")
-        menu = [["Username", "First Name", "Last Name", "University", "Major", "Profile Created"],
-                ["=" * column_width, "=" * column_width, "=" * column_width, "=" * column_width, "=" * column_width, "=" * column_width]]
+        menu = [["Username", "First Name", "Last Name", "Profile Created"],
+                ["=" * column_width, "=" * column_width, "=" * column_width, "=" * column_width]]
         for friend in friends:
             friend = db.get_user(friend)
             friend_profile = db.get_user_profile(friend[0])
@@ -112,10 +112,10 @@ class UserProfilePage:
                 is_created = "View Profile"
             else:
                 is_created = ""
-            user_attributes = [friend[0], friend[2], friend[3], friend_profile[2], friend_profile[1], is_created]
+            user_attributes = [friend[0], friend[2], friend[3], is_created]
             menu.append(user_attributes)
         for row in menu:
-            print("{:<25} | {:<25} | {:<25} | {:<25} | {:<25} | {:<25}".format(*row))
+            print("{:<25} | {:<25} | {:<25} | {:<25}".format(*row))
         print("\n")
 
         print("Would you like to view a friend's profile")
