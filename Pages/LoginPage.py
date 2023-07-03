@@ -3,14 +3,12 @@ from Util import session_info as account
 import MainMenu as Menu
 import re
 
-from Pages.Useful import BrowseInCollegePage as Browse, DirectoriesPage as Directory, GeneralPage as General, \
-    BusinessSolutionsPage as Business
-from Pages.InCollegeImportant import AccessibilityPage as Accessibility, \
+from Pages.Useful import BrowseInCollegePage as Browse, DirectoriesPage as Directory, GeneralPage as General, BusinessSolutionsPage as Business
+from Pages.InCollegeImportant import AccessibilityPage as Accessibility,\
     BrandPolicyPage as Brand, CopyrightPage as Copyright, \
     UserAgreementPage as UserAgreement, CookiePolicyPage as Cookie, \
     CopyrightPolicyPage as CopyPolicy, About as About, \
     LanguagePage as Lang, PrivacyPage as Privacy
-
 
 class Login:
     global username
@@ -19,12 +17,12 @@ class Login:
     def menu(self):
         db.sign_out_all()
         print("\n** Log-in Page **\n")
-        print("#" * 100)
+        print("#"*100)
         print("# \"When I had just graduated, I had a hard time  trying to get companies to accept me withe no     #")
         print("# experience, but thanks to InCollege, I learned skills that employers wanted, and was able to     #")
         print("# connect with them. I recommend InCollege to all students in college that want to get hired as    #")
         print("# soon as they graduate.\"                                                                          #")
-        print("#" * 100)
+        print("#"*100)
         self.print_menu()
         option = int(input("Enter Option: "))
         if option == 11:
@@ -83,7 +81,7 @@ class Login:
 
     def sign_in(self):
         print("** Sign-In **")
-        global username  # username is global so it can be accessed from other functions
+        global username #username is global so it can be accessed from other functions
         username = input("Username: ")
         password = input("Password: ")
 
@@ -129,8 +127,7 @@ class Login:
             if len(password) < 8 or len(password) > 12:
                 print("\nInvalid password please try again: ")
                 password = input("")
-            elif not re.search(r'[A-Z]', password) or not re.search(r'\d', password) or not re.search(
-                    r'[ -\/:-@\[-`{-~]', password):
+            elif not re.search(r'[A-Z]', password) or not re.search(r'\d', password) or not re.search(r'[ -\/:-@\[-`{-~]', password):
                 print("\nInvalid password please try again: ")
                 password = input("")
             else:
@@ -165,11 +162,11 @@ class Login:
 
         choice = int(input("Please enter 1 or 2: "))
         while True:
-            if choice != 1 and choice != 2:
-                choice = int(input("Invalid input please enter 1 or 2: "))
-            else:
-                break
-
+                if choice != 1 and choice !=2:
+                    choice = int(input("Invalid input please enter 1 or 2: "))
+                else:
+                    break
+        
         if choice == 1:
             first_name = input("\nPlease enter their first name: ")
             last_name = input("Please enter their last name: ")
@@ -181,17 +178,17 @@ class Login:
                 print("2.) No Return to previous page")
                 opt = int(input("Please enter 1 or 2: "))
                 while True:
-                    if opt != 1 and opt != 2:
-                        opt = int(input("Invalid input please enter 1 or 2: "))
-                    else:
-                        break
+                        if opt != 1 and opt !=2:
+                            opt = int(input("Invalid input please enter 1 or 2: "))
+                        else:
+                            break
                 if opt == 1:
                     print("1.) Sign In")
                     print("2.) Create Account")
                     print("3.) Return to previous page")
                     option = int(input("Enter option: "))
                     while True:
-                        if option != 1 and option != 2 and option != 3:
+                        if option != 1 and option !=2 and option != 3:
                             option = int(input("Invalid input please enter 1, 2, or 3: "))
                         else:
                             break
@@ -202,13 +199,13 @@ class Login:
                     elif option == 3:
                         self.search()
 
-
+                    
                 elif opt == 2:
                     return self.search()
             else:
                 print("\nThey are not yet a part of the InCollege system yet\n")
                 return self.search()
-
+        
         elif choice == 2:
             return self.menu()
 
@@ -216,7 +213,7 @@ class Login:
         column_width = 31
         print("\n")
         menu = [["Main Menu Options", "Useful Links", "Important InCollege Links"],
-                ["=" * column_width, "=" * column_width, "=" * column_width],
+                ["="*column_width, "="*column_width, "="*column_width],
                 ["11.) Sign In", "21.) General", "31.) Copyright Notice"],
                 ["12.) Create Account", "22.) Browse InCollege", "32.) About"],
                 ["13.) Search for people you know", "23.) Business Solutions", "33.) Accessibility"],

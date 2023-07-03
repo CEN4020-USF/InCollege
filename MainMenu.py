@@ -3,9 +3,8 @@ from Pages import LoginPage as login
 from Pages import ConnectionsPage as Connect
 from Pages import JobOpportunitiesPage as Job
 from Pages import ShowMyNetwork as Network, UserProfilePage as Profile
-from Pages.Useful import BrowseInCollegePage as Browse, DirectoriesPage as Directory, GeneralPage as General, \
-    BusinessSolutionsPage as Business
-from Pages.InCollegeImportant import AccessibilityPage as Accessibility, \
+from Pages.Useful import BrowseInCollegePage as Browse, DirectoriesPage as Directory, GeneralPage as General, BusinessSolutionsPage as Business
+from Pages.InCollegeImportant import AccessibilityPage as Accessibility,\
     BrandPolicyPage as Brand, CopyrightPage as Copyright, \
     UserAgreementPage as UserAgreement, CookiePolicyPage as Cookie, \
     CopyrightPolicyPage as CopyPolicy, About as About, \
@@ -95,7 +94,7 @@ class MainMenu:
             is_exit = self.selected_menu_option(choice)
             if (choice == 16):
                 return self.exit()
-
+        
     @staticmethod
     def exit():
         print()
@@ -106,11 +105,12 @@ class MainMenu:
         print("##################################################")
         return 0
 
+
     def print_menu(self):
         column_width = 31
         print("\n")
         menu = [["Main Menu Options", "Useful Links", "Important InCollege Links"],
-                ["=" * column_width, "=" * column_width, "=" * column_width],
+                ["="*column_width, "="*column_width, "="*column_width],
                 ["11.) Your Skill Development", "21.) General", "31.) Copyright Notice"],
                 ["12.) Your Connections", "22.) Browse InCollege", "32.) About"],
                 ["13.) Job/Internship Prospects", "23.) Business Solutions", "33.) Accessibility"],
