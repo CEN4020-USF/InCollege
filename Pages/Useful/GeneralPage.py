@@ -54,7 +54,10 @@ class GeneralPage:
         elif choice == "7":
             Developer.DeveloperPage().menu()
         elif choice == "0":
-            return
+            if not db.is_user_signed_in():
+                LoginPage.Login().menu()
+            else:
+                return
         else:
             print(f"{choice} is not supported. Please try again")
             self.menu()
