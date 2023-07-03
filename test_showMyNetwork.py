@@ -14,7 +14,7 @@ class TestShowNetwork:
         self.connections = ConnectionsPage.ConnectionsPage()
 
     def test_show_friends(self, monkeypatch, capsys, mocker):
-        inputs = ["11", "test", "Password1!", "14", "1", "0", 15]
+        inputs = ["11", "test", "Password1!", "14", "1", "0", '16']
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         with mocker.patch.object(db, 'check_name', return_value=None):
@@ -26,7 +26,7 @@ class TestShowNetwork:
         assert "Your Friends" in captured.out
 
     def test_NoFriends_show_friends(self, monkeypatch, capsys, mocker):
-        inputs = ["11", "test", "Password1!", "14", "1", "0", 15]
+        inputs = ["11", "test", "Password1!", "14", "1", "0", '16']
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         with mocker.patch.object(db, 'get_friends', return_value=''):
@@ -38,10 +38,10 @@ class TestShowNetwork:
         assert "You currently have no connections" in captured.out
 
     def test_delete_friends(self, monkeypatch, capsys, mocker):
-        inputs = ["11", "test", "Password1!", "14", "2","jimmy", "0", 15]
+        inputs = ["11", "test", "Password1!", "14", "2","rmalloy1", "0", '16']
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
-        user = ["jimmy"]
+        user = ["rmalloy1"]
         with mocker.patch.object(db, 'get_friends', return_value=user):
             self.login.menu()
 
@@ -51,7 +51,7 @@ class TestShowNetwork:
         assert "We have removed" in captured.out
 
     def test_delete_friends_wrong_input(self, monkeypatch, capsys, mocker):
-        inputs = ["11", "test", "Password1!", "14", "2","janky", "0", 15]
+        inputs = ["11", "test", "Password1!", "14", "2","janky", "0", '16']
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         user = ["jimmy"]
@@ -64,7 +64,7 @@ class TestShowNetwork:
         assert "You are not friends with" in captured.out
 
     def test_Network_returns_to_menu(self, monkeypatch, capsys, mocker):
-        inputs = ["11", "test", "Password1!", "14", "0", 15]
+        inputs = ["11", "test", "Password1!", "14", "0", '16']
         monkeypatch.setattr('builtins.input', lambda _: inputs.pop(0))
 
         with mocker.patch.object(db, 'check_name', return_value=None):

@@ -25,8 +25,8 @@ class UserProfilePage:
             input("Press Enter to Return to Your Profile")
             return
         print("\nMenu: ")
-        print("1.) Edit Account")
-        print("2.) View Friends")
+        print("1.) Edit Profile")
+        print("2.) View Friend's Profile")
         print("0.) Return to Menu")
         choice = input("Enter Choice: ")
         if choice == "1":
@@ -42,14 +42,69 @@ class UserProfilePage:
             self.load_profile(current_user[0])
 
     def edit(self, user):
+<<<<<<< HEAD
         return
 
+=======
+        print("\nWhat would you like to edit?")
+        print("1.) Title")
+        print("2.) Major")
+        print("3.) University")
+        print("4.) About")
+        print("5.) Add Professional Experience")
+        print("6.) Add Education")
+        print("0.) Save Changes and Return")
+        choice = input("Enter Choice: ")
+
+        match choice:
+            case "1":
+                title = input("Enter Title: ")
+                db.set_user_profile(user, "Title", title)
+                self.edit(user)
+            case "2":
+                major = input("Enter Major: ").title()
+                db.set_user_profile(user, "Major", major)
+                self.edit(user)
+            case "3":
+                uni = input("Enter University: ").title()
+                db.set_user_profile(user, "University", uni)
+                self.edit(user)
+            case "4":
+                about = input("Tell us About Yourself: ")
+                db.set_user_profile(user, "About", about)
+                self.edit(user)
+            case "5":
+                title = input("What is the title of the job? ")
+                description = input("Give a description of the job ")
+                employer = input("Who is the employer of the job? ")
+                location = input("Where is the location of the job? ")
+                start = input("When did you start working here? ")
+                end = input("When did you stop working here? ")
+                db.add_job(login.username, title, description, employer, location, None, start, end)
+                self.edit(user)
+            case "6":
+                school = input("Name of School: ").title()
+                degree = input("Name of Degree: ").title()
+                start = input("Start Year: ")
+                end = input("End Year: ")
+                db.add_education(user, school, degree, start, end)
+                self.edit(user)
+            case "0":
+                user_check = db.get_user_profile(user)
+                if None not in user_check:
+                    db.set_user_profile(user, "IsCreated", 1)
+                return
+            case _:
+                print(f"{choice} is not a valid choice.")
+                self.edit(user)
+    
+>>>>>>> origin/testybranchChris
     def view_friends(self, user):
         column_width = 25
         friends = db.get_friends(user)
 
         if len(friends) == 0:
-            print("\nCurrently, you have no friends")
+            print("\nThere are no friends on your friends list")
             return
 
         print("\n")
